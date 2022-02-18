@@ -11,7 +11,7 @@
                 {% csrf_token %}
                 {{ 1form|crispy }}
                 {{ 2form|crispy }}
-                {% if avatar_url %}
+                {% if request.user.profile.avatar %}
                     <div class='row'>
                         <div class='col-12 my-1'>
                             <img src="{{ avatar_url }}" width='300px'>

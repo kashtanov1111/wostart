@@ -12,12 +12,16 @@ class UpdateUserProfileView(View):
     form_class2 = UserProfileForm
 
     def get(self, request):
+        if request.user.profile.avatar:
+            avatar_url = request.user.profile.avatar.url
+        else:
+            avatar_url = None
         return render(
             request,
             self.template_name,
             {'1form': self.form_class1(instance=request.user),
             '2form': self.form_class2(instance=request.user.profile),
-            'avatar_url': request.user.profile.avatar.url}
+            'avatar_url': avatar_url}
         )
 
     def post(self, request):
