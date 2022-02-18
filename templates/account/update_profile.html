@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block content %}
+    <div class='row'>
+        <div class='col-md-6 mx-auto'>
+            <h1 class='text-center'>You can change your profile here.</h1>
+            <form enctype="multipart/form-data" action="" method='post'>
+                {% csrf_token %}
+                {{ 1form|crispy }}
+                {{ 2form|crispy }}
+                {% if avatar_url %}
+                    <div class='row'>
+                        <div class='col-12 my-1'>
+                            <img src="{{ avatar_url }}" width='300px'>
+                        </div>
+                    </div>
+                {% endif %}
+                <button class='btn btn-success' type='submit'>Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

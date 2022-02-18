@@ -1,0 +1,23 @@
+<!doctype html>
+{% load static %}
+{% url 'home' as home_url %}
+
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>
+            {% block title %}Second Project{% endblock title %}
+        </title>
+        {% include 'base/head.html' %}
+    </head>
+    <body>
+        {% include 'base/navbar.html' %}
+        {% include 'base/before_block_content.html' %}
+        <div class='container'>
+            {% include 'base/messages.html' %}
+            {% block content %}
+            {% endblock content %}
+        </div>
+        {% include 'base/before_closing_body.html' %}
+    </body>
+</html>

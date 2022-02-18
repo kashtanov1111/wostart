@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-op3gkk0m8wowr#-dv2(i8_*d)aex!o^4@a&o7b#4ain8(^5=9!'
-
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # Third-party 
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'debug_toolbar',
+    'storages',
 
     # Local
     'accounts',
@@ -50,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -57,7 +69,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))], #Added templates to base dir
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,14 +89,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'postgres',
-    'USER': 'postgres',
-    'PASSWORD': 'postgres',
-    'HOST': 'db',
-    'PORT': 5432
-    }
+    "default": env.dj_db_url("DATABASE_URL",
+    default="postgres://postgres@db/postgres")
 }
 
 
@@ -123,7 +129,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -132,3 +137,70 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ####################
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+'django.contrib.auth.backends.ModelBackend',
+'allauth.account.auth_backends.AuthenticationBackend',
+)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+# STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
+SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS",
+default=True)
+SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
+SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
+CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
+
+
+USE_S3 = env.bool('USE_S3', default=True)
+
+if USE_S3:
+    # aws settings
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_DEFAULT_ACL = 'public_read'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'config.storage_backends.PublicMediaStorage'
+    # s3 private media settings
+    PROTECTED_DIR_NAME = 'protected'
+    PROTECTED_MEDIA_URL = '//%s.s3.amazonaws.com/%s/' %( AWS_STORAGE_BUCKET_NAME, PROTECTED_DIR_NAME)
+    S3DIRECT_REGION =  'us-east-2' 
+else:
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+    PROTECTED_ROOT = str(BASE_DIR.joinpath('protected_media'))
+
+    STATIC_URL = '/static/'
+    STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+
+STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
