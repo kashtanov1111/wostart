@@ -28,7 +28,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1', 'wostart.com']
 
 
 # Application definition
@@ -204,3 +204,11 @@ else:
     STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 
 STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
+
+
+# allauth settings
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True

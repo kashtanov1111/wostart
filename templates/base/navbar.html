@@ -1,5 +1,5 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark ">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
             Second Project</a>
         <button class="navbar-toggler" type="button"
@@ -20,27 +20,54 @@
                         Home
                     </a>
                 </li>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" 
-                    id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Apps
-                </a>
-                <ul class="dropdown-menu" 
-                aria-labelledby="navbarDropdown">
-                    {% comment %} <li><a class="dropdown-item" href="{% url 'sublog:post_list' %}">Startup Blog</a></li> {% endcomment %}
-                </ul>
+                <li class="nav-item">
+                    <a class="nav-link 
+                    {% if request.path == about_url %}active{% endif %}"
+                    aria-current="page" href="{% url 'about' %}">
+                        About
+                    </a>
                 </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link active" 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" 
+                        id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Apps
+                    </a>
+                    <ul class="dropdown-menu" 
+                    aria-labelledby="navbarDropdown">
+                        {% comment %} <li><a class="dropdown-item" href="{% url 'sublog:post_list' %}">Startup Blog</a></li> {% endcomment %}
+                    </ul>
+                </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" 
+                        id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu" 
+                    aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" 
+                            href="{% url 'profile:update_profile' %}">
+                                Edit Profile
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" 
+                            href="{% url 'account_change_password' %}?next={{ request.path }}">
+                                Change Password
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            {% comment %} <li class="nav-item">
+                <a class="nav-link active" 
                             aria-current="page" 
                             href="{% url 'profile:update_profile' %}">
                                 <span class='username'>
                                     {{ user.username }}
                                 </span>
                         </a>
-                    </li>
+                    </li> {% endcomment %}
                 {% endif %}
             </ul>
             <form class="d-flex">

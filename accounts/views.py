@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.generic import (
@@ -6,7 +7,7 @@ from django.views.generic import (
 
 from .forms import CustomUserChangeForm, UserProfileForm
 
-class UpdateUserProfileView(View):
+class UpdateUserProfileView(LoginRequiredMixin, View):
     template_name = 'account/update_profile.html'
     form_class1 = CustomUserChangeForm
     form_class2 = UserProfileForm
