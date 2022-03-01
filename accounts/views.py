@@ -62,6 +62,9 @@ class UserListView(PageLinksMixin, ListView):
             self.request.GET.get('only_startups'))
         self.request_sort_by = self.request.GET.get('sort_by')
         self.request_q = self.request.GET.get('q')
+        self.request_clear_all = self.request.GET.get('clear_all')
+        if self.request_clear_all == 'yes':
+            return redirect('users:user_list')
         if (self.request_paginate_by is not None and 
             int(self.request_paginate_by) < 50):
             self.paginate_by = self.request_paginate_by

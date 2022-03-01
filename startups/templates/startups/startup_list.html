@@ -6,7 +6,7 @@
         {% include 'startups/snippets/startup_list_get_form.html' %}
         <hr>
         <div class="row row-cols-1 g-2">
-            {% for startup in startup_list %}
+            {% for startup in object_list %}
                 {% include 'startups/snippets/startup_card.html' %}
             {% endfor %}
         </div>

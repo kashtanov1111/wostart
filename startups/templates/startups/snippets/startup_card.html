@@ -16,11 +16,13 @@
                 {{ startup.description|truncatewords:50 }}
             </p>
         </div>
-        <div class='card-footer'>   
-            <a href='{{ startup.web_site }}'>
-                {{ startup.web_site }}
-            </a>
-        </div>
+        {% if startup.web_site %}
+            <div class='card-footer'>   
+                <a href='{{ startup.web_site }}'>
+                    {{ startup.web_site }}
+                </a>
+            </div>
+        {% endif %}
     </div>
     {% comment %} </a> {% endcomment %}
 </div>
