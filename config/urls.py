@@ -19,11 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 from . import views
+from accounts.views import UpdateUserProfileView
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('profile/', include('accounts.urls')),
+    path('users/', include('accounts.urls')),
+    path('startups/', include('startups.urls')),
+    path('profile/edit/', UpdateUserProfileView.as_view(), 
+            name='update_profile'),
     path('about/', views.AboutPageView.as_view(), name='about'),
     path('', views.HomePageView.as_view(), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

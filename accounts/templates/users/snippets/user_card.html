@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="col-12">
+    <a style='color:#212529' href="{% url 'users:user_profile' person.username %}">
+    <div class='card'>
+        <div class="card-body">
+            <div class='row my-2'>
+                <div class='col-auto px-1'>
+                    {% if person.profile.avatar %}
+                    <img class='user-list-avatars' src="{{person.profile.avatar.url}}">
+                    {% else %}
+                    <img class='user-list-avatars' src="{% static 'images/nobody.jpg' %}">
+                    {% endif %}
+                </div>
+                <div class='col-auto px-1'>
+                    <h5 class="card-title">
+                        {{ person.first_name}} {{ person.last_name}}
+                    </h5>
+                </div>
+            </div>
+            <h6 class="card-subtitle mb-2 text-muted">
+                @{{ person.username }} | Joined: {{ person.date_joined|date:'F jS, Y' }}
+            </h6>
+            {% if person.profile.about %}
+            <p class="card-text">
+                {{ person.profile.about|truncatewords:50 }}
+            </p>
+            {% endif %}
+        </div>
+        <div class='card-footer'>   
+            <small class='text-muted'>{{ person.email }}</small>
+        </div>
+    </div>
+    </a>
+</div>

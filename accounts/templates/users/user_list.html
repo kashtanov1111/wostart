@@ -1,0 +1,22 @@
+{% extends 'users/base_accounts.html' %}
+
+{% block title %}
+{{ block.super }} - People
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>People</h1><hr>
+        {% include 'users/snippets/user_list_get_form.html' %}
+        <hr>
+        <div class="row row-cols-1 g-2">
+            {% for person in user_list %}
+                {% include 'users/snippets/user_card.html' %}
+            {% endfor %}
+        </div>
+        <hr>
+        {% block footer %}
+        {{ block.super }}
+        {% endblock footer %}
+    </div>
+{% endblock content %}

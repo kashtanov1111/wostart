@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="col-12">
+    {% comment %} <a style='color:#212529' href="{% url 'users:user_profile' person.username %}"> {% endcomment %}
+    <div class='card'>
+        <div class="card-body">
+            <div class='col-auto px-1'>
+                <h5 class="card-title">
+                    {{ startup.title }}
+                </h5>
+            </div>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Founded: {{ startup.founded|date:'F jS, Y' }}
+            </h6>
+            <p class="card-text">
+                {{ startup.description|truncatewords:50 }}
+            </p>
+        </div>
+        <div class='card-footer'>   
+            <a href='{{ startup.web_site }}'>
+                {{ startup.web_site }}
+            </a>
+        </div>
+    </div>
+    {% comment %} </a> {% endcomment %}
+</div>

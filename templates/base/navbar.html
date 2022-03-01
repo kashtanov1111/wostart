@@ -1,7 +1,10 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark ">
+{% load static %}
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white ">
     <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
-            Second Project</a>
+            <img height='50px'src="{% static 'images/logo.png' %}" alt="">
+        </a>
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" 
                 data-bs-target="#navbarSupportedContent" 
@@ -15,40 +18,47 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link 
-                    {% if request.path == home_url %}active{% endif %}"
-                    aria-current="page" href="{% url 'home' %}">
-                        Home
+                    {% if request.path == about_url %}active{% endif %}"
+                    aria-current="page" href="{% url 'about' %}">
+                        About
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
                     {% if request.path == about_url %}active{% endif %}"
                     aria-current="page" href="{% url 'about' %}">
-                        About
+                        Ads
                     </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" 
-                        id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Apps
+                <li class="nav-item">
+                    <a class="nav-link 
+                    {% if request.path == startup_list_url %}active{% endif %}"
+                    aria-current="page" href="{% url 'startups:startup_list' %}">
+                        Startups
                     </a>
-                    <ul class="dropdown-menu" 
-                    aria-labelledby="navbarDropdown">
-                        {% comment %} <li><a class="dropdown-item" href="{% url 'sublog:post_list' %}">Startup Blog</a></li> {% endcomment %}
-                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link 
+                        {% if request.path == user_list_url %}
+                            active
+                        {% endif %}"
+                        aria-current="page" 
+                        href="{% url 'users:user_list' %}">
+                        People
+                    </a>
                 </li>
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" 
                         id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ user.username }}
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                        {{ user.first_name }} {{ user.last_name }}
                     </a>
                     <ul class="dropdown-menu" 
-                    aria-labelledby="navbarDropdown">
+                        aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" 
-                            href="{% url 'profile:update_profile' %}">
+                            href="{% url 'update_profile' %}">
                                 Edit Profile
                             </a>
                         </li>
@@ -57,33 +67,25 @@
                                 Change Password
                             </a>
                         </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" 
+                            href="{% url 'account_logout' %}?next={{ request.path }}">
+                                Log Out
+                            </a>
+                        </li>
                     </ul>
                 </li>
-            {% comment %} <li class="nav-item">
-                <a class="nav-link active" 
-                            aria-current="page" 
-                            href="{% url 'profile:update_profile' %}">
-                                <span class='username'>
-                                    {{ user.username }}
-                                </span>
-                        </a>
-                    </li> {% endcomment %}
-                {% endif %}
+            {% endif %}
             </ul>
-            <form class="d-flex">
-                {% if user.is_authenticated %}
-                    <a class="btn btn-success" 
-                        href="{% url 'account_logout' %}?next={{ request.path }}" role="button">
-                        Log out
-                    </a>
-                {% else %}
+            <form class="space-for-search d-flex">
+                {% if not user.is_authenticated %}
                     <a class="navbar-button-left btn 
-                                        btn-outline-success" 
+                                        btn-outline-dark" 
                         href="{% url 'account_login' %}?next={{ request.path }}" 
                         role="button">
                         Log In
                     </a>
-                    <a class="btn btn-success" 
+                    <a class="mybtn btn btn-success" 
                         href="{% url 'account_signup' %}" 
                         role="button">
                         Sign Up

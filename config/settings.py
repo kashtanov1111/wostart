@@ -48,9 +48,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'debug_toolbar',
     'storages',
+    'faker',
 
     # Local
     'accounts',
+    'startups',
+    'tags',
+    'ads',
 ]
 
 MIDDLEWARE = [
@@ -208,7 +212,7 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 
 # allauth settings
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True

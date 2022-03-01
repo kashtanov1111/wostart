@@ -2,7 +2,14 @@
 {% load static %}
 
 {% block content %}
-    <h1 class='text-center'>Second Project</h1>
+<div style='background-color:black;' class='container-photo'>
+    <img style='opacity:0.6;'
+        width='100%' 
+        src="{% static 'images/morning-newyork.jpg' %}" alt="">
+    <div class='centered'>
+        <h1>Startups. People. Together.</h1>
+        <p>Here like-minded people find each other.</p>        
+    </div>
     <script src="{% static 'js/home.js' %}"></script>
-    <img width='100%' height='auto' src="{% static 'images/new_york_1.jpg' %}">
+</div>
 {% endblock content %}
