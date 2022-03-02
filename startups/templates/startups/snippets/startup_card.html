@@ -1,7 +1,8 @@
 {% load static %}
 
 <div class="col-12">
-    {% comment %} <a style='color:#212529' href="{% url 'users:user_profile' person.username %}"> {% endcomment %}
+    <a style='color:#212529' 
+        href="{{ startup.get_absolute_url }}">
     <div class='card'>
         <div class="card-body">
             <div class='col-auto px-1'>
@@ -17,12 +18,14 @@
             </p>
         </div>
         {% if startup.web_site %}
-            <div class='card-footer'>   
-                <a href='{{ startup.web_site }}'>
-                    {{ startup.web_site }}
-                </a>
+            <div class='card-footer'>
+                <object  type="owo/uwu">   
+                    <a href='{{ startup.web_site }}'>
+                        {{ startup.web_site }}
+                    </a>
+                </object>
             </div>
         {% endif %}
     </div>
-    {% comment %} </a> {% endcomment %}
+    </a>
 </div>

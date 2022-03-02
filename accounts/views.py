@@ -47,13 +47,12 @@ class UpdateUserProfileView(LoginRequiredMixin, View):
             )
 
 class UserListView(PageLinksMixin, ListView):
-    model = get_user_model()
     template_name = 'users/user_list.html'
     context_object_name = 'user_list'
     queryset = (
-        model.objects
+        get_user_model().objects
         .select_related('profile'))
-    default_pagination = 3
+    paginate_by = 3
     ordering = '-date_joined'
 
     def get(self, request, *args, **kwargs):
@@ -68,8 +67,6 @@ class UserListView(PageLinksMixin, ListView):
         if (self.request_paginate_by is not None and 
             int(self.request_paginate_by) < 50):
             self.paginate_by = self.request_paginate_by
-        else:
-            self.paginate_by = self.default_pagination
         return super().get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -79,7 +76,7 @@ class UserListView(PageLinksMixin, ListView):
         context['sort_by'] = self.request_sort_by
         context['query'] = self.request_q
         if context['pag_by'] is None:
-            context['pag_by'] = str(self.default_pagination)
+            context['pag_by'] = str(self.paginate_by)
         return context
 
     def get_queryset(self):

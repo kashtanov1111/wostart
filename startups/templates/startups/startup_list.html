@@ -2,15 +2,13 @@
 
 {% block content %}
     <div class='container'>
-        <h1 class='text-center'>Startups</h1><hr>
+        <h1 class='text-center'>Startups</h1>
         {% include 'startups/snippets/startup_list_get_form.html' %}
-        <hr>
         <div class="row row-cols-1 g-2">
             {% for startup in object_list %}
                 {% include 'startups/snippets/startup_card.html' %}
             {% endfor %}
         </div>
-        <hr>
         {% block footer %}
         {{ block.super }}
         {% endblock footer %}

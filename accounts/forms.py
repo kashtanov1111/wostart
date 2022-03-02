@@ -1,4 +1,4 @@
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm, LoginForm
 
 from django import forms
 from django.forms import Textarea
@@ -19,6 +19,12 @@ class CustomUserChangeForm(UserChangeForm):
         model = get_user_model()
         fields = ('email', 'username', 'first_name', 'last_name')
 
+class CustomLoginForm(LoginForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['login'].label = False
+        self.fields['password'].label = False
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(
@@ -28,11 +34,16 @@ class CustomSignupForm(SignupForm):
         max_length=100, required=True,
         widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
 
-    email = forms.CharField(
-        max_length=100, required=True,
-        widget=forms.EmailInput(attrs={'placeholder': 'Last name',
-                                    'class': 'form-control'}))
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].label = False
+        self.fields['last_name'].label = False
+        self.fields['email'].label = False
+        self.fields['username'].label = False
+        self.fields['password1'].label = False
+        self.fields['password2'].label = False
+
         
     def save(self, request):
         user = super().save(request)

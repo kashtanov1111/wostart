@@ -1,0 +1,41 @@
+{% extends 'startups/base_startups.html' %}
+{% load static %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>Startup Profile</h1>
+        <div class="card">
+            <div class="card-body">
+              <div class='row'>
+                <div class='col-md col-12'>
+                    <h5 class="card-title">{{ startup.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Founded: {{ startup.founded|date:'F jS, Y' }}
+                    </h6>
+                    <p class="card-text">
+                        {{ startup.description }}
+                    </p>
+                    <p class='card-text'><b>Founder: </b>
+                        <a href="{{ startup.founder.get_absolute_url}}">
+                        {{ startup.founder.first_name }} 
+                        {{ startup.founder.last_name }}
+                        </a>
+                    </p>
+                    {% if startup.web_site %}
+                        <p class='card-text'><b>Web-site: </b>
+                            <a href="{{ startup.web_site }}">
+                                {{ startup.web_site }}
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+                {% with startup.images.all as startup_images %}
+                    {% if startup_images %}
+                        {% include 'startups/snippets/carousel_startup.html' %}
+                    {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+          </div>
+    </div>
+{% endblock content %}

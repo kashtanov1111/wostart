@@ -19,4 +19,3 @@ class CustomUserAdmin(UserAdmin):
     inlines = [UserProfileInline,]
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(UserProfile)

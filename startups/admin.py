@@ -1,5 +1,12 @@
 from django.contrib import admin
 
-from .models import Startup
+from .models import Startup, StartupImage
 
-admin.site.register(Startup)
+class PropertyImageInline(admin.TabularInline):
+    model = StartupImage
+    extra = 1
+
+class StartupAdmin(admin.ModelAdmin):
+    inlines = [ PropertyImageInline, ]
+
+admin.site.register(Startup, StartupAdmin)

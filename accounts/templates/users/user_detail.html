@@ -28,14 +28,18 @@
                       {{ person.profile.about }}
                     </p>
                   {% endif %}
-                  {% with person.profile.startups.all as person_startups %}
+                  {% with person.startups.all as person_startups %}
                   {% if person_startups %}
                     <p class='card-text'>
-                        <b>Startup</b>{{ person_startups|pluralize}}:
-                        {% for startup in person_startups.all %}
-                          {{ startup.title }}
-                        {% endfor %}
-                    </p>
+                        <b>Startup{{ person_startups|pluralize}}</b>:
+                        {% for startup in person_startups %}{% comment%}
+                          {%endcomment%}{% if forloop.counter >= 2 %}{% comment%}
+                          {%endcomment%}, {{ startup.title }}{% comment%}  
+                          {%endcomment%}{% else %}{% comment%}
+                          {%endcomment%}{{ startup.title }}{% comment%}
+                          {%endcomment%}{% endif %}{% comment%}
+                        {%endcomment%}{% endfor %}{% comment%}
+                    {%endcomment%}</p>
                   {% endif %}
                   {% endwith %}
                   <p class='card-text'><b>Email: </b>

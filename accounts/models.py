@@ -6,9 +6,7 @@ from django.db import models
 from django.db.models import Value, Q 
 from django.db.models.functions import Concat
 from django.template.defaultfilters import slugify
-
-from startups.models import Startup
-from tags.models import Tag
+from django.urls import reverse
 
 class CustomUserQueryset(models.query.QuerySet):
 
@@ -21,7 +19,7 @@ class CustomUserQueryset(models.query.QuerySet):
                     .filter(Q(full_name__icontains=query) |
                             Q(profile__about__icontains=query) |
                             Q(email__icontains=query)
-                            )
+                            ).distinct()
                 )
 
 class CustomUserManager(UserManager):
@@ -37,6 +35,9 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+
+    def get_absolute_url(self):
+        return reverse('users:user_profile', kwargs={'username': self.username})
 
 
     objects = CustomUserManager()
@@ -62,14 +63,12 @@ class UserProfile(models.Model):
     mobile_phone = models.BigIntegerField(blank=True, null=True)
     avatar = models.ImageField(
         upload_to='avatars', blank=True, null=True)
-    startups = models.ManyToManyField(Startup, blank=True, null=True)
 
     objects = UserProfileManager()
     
+    def get_absolute_url(self):
+        return reverse('users:user_profile', kwargs={'username': self.user.username})
+    
     def __str__(self):
         return self.user.email
-    
-    @property
-    def startup_list(self):
-        return ', '.join([startup.title for startup in self.startups.all()])
 
