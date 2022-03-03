@@ -1,7 +1,10 @@
+from ast import Delete
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import (
-    ListView, DetailView
+    ListView, DetailView, DeleteView,
 )
+from django.urls import reverse_lazy
 
 from .models import Startup
 
@@ -54,3 +57,21 @@ class StartupListView(PageLinksMixin, ListView):
 class StartupDetailView(DetailView):
     model = Startup
     
+
+class UserStartupsListView(LoginRequiredMixin, ListView):
+    model = Startup
+    template_name = 'startups/user_startups.html'
+
+    def get_queryset(self):
+        self.queryset = (self.model.objects
+            .filter(founder=self.request.user))
+        return self.queryset
+
+class StartupDeleteView(DeleteView):
+    model = Startup
+    success_url = reverse_lazy('startups:user_startups')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['back'] = self.request.GET.get('back')
+        return context

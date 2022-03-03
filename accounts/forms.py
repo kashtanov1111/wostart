@@ -1,5 +1,6 @@
-from allauth.account.forms import SignupForm, LoginForm
-
+from allauth.account.forms import (
+    SignupForm, LoginForm, ChangePasswordForm 
+)
 from django import forms
 from django.forms import Textarea
 from django.contrib.auth import get_user_model
@@ -55,6 +56,14 @@ class CustomSignupForm(SignupForm):
         )        
         return user
 
+class CustomChangePasswordForm(ChangePasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['oldpassword'].label = False
+        self.fields['password1'].label = False
+        self.fields['password2'].label = False
+
 class UserProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -71,3 +80,4 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             'avatar': forms.FileInput(attrs={'class': 'form-control'}), 
         }
+

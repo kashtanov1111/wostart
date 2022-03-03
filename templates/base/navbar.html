@@ -1,97 +1,143 @@
 {% load static %}
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white ">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img height='50px'src="{% static 'images/logo.png' %}" alt="">
-        </a>
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse" 
-                data-bs-target="#navbarSupportedContent" 
-                aria-controls="navbarSupportedContent" 
-                aria-expanded="false" 
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" 
-            id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link 
-                    {% if request.path == about_url %}active{% endif %}"
-                    aria-current="page" href="{% url 'about' %}">
-                        About
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link 
-                    {% if request.path == about_url %}active{% endif %}"
-                    aria-current="page" href="{% url 'about' %}">
-                        Ads
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link 
-                    {% if request.path == startup_list_url %}active{% endif %}"
-                    aria-current="page" href="{% url 'startups:startup_list' %}">
+<div class="container">
+<a class="navbar-brand" href="{% url 'home' %}">
+    <img height='50px'src="{% static 'images/logo.png' %}" alt="">
+</a>
+<button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" 
+        data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" 
+    id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link 
+            {% if request.path == about_url %}active{% endif %}"
+            aria-current="page" href="{% url 'about' %}">
+                About
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link 
+            {% if request.path == about_url %}active{% endif %}"
+            aria-current="page" href="{% url 'about' %}">
+                Ads
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" 
+                href="#" id="navbarDropdownStartups" role="button" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                Startups
+            </a>
+            <ul class="dropdown-menu" 
+                aria-labelledby="navbarDropdownStartups">
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == startup_list_url %}
+                        active
+                        {% endif %}" 
+                        href="{% url 'startups:startup_list' %}">
                         Startups
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link 
-                        {% if request.path == user_list_url %}
-                            active
-                        {% endif %}"
-                        aria-current="page" 
-                        href="{% url 'users:user_list' %}">
-                        People
+                {% if user.is_authenticated %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == user_startups_url %}
+                        active
+                        {% endif %}" 
+                        href="{% url 'startups:user_startups' %}">
+                        My Startups
                     </a>
                 </li>
-            {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" 
-                        id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" 
-                        aria-expanded="false">
-                        {{ user.first_name }} {{ user.last_name }}
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == startup_list_url %}
+                        active
+                        {% endif %}" 
+                        href="{% url 'startups:startup_list' %}">
+                        Add Startup
                     </a>
-                    <ul class="dropdown-menu" 
-                        aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" 
-                            href="{% url 'update_profile' %}">
-                                Edit Profile
-                            </a>
-                        </li>
-                        <li><a class="dropdown-item" 
-                            href="{% url 'account_change_password' %}?next={{ request.path }}">
-                                Change Password
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" 
-                            href="{% url 'account_logout' %}?next={{ request.path }}">
-                                Log Out
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-            {% endif %}
-            </ul>
-            <form class="space-for-search d-flex">
-                {% if not user.is_authenticated %}
-                    <a class="navbar-button-left btn 
-                                        btn-outline-dark" 
-                        href="{% url 'account_login' %}?next={{ request.path }}" 
-                        role="button">
-                        Log In
-                    </a>
-                    <a class="mybtn btn btn-success" 
-                        href="{% url 'account_signup' %}" 
-                        role="button">
-                        Sign Up
-                    </a>
                 {% endif %}
-            </form>
-        </div>
-    </div>
+            </ul>
+            </li>
+        <li class="nav-item">
+            <a class="nav-link 
+                {% if request.path == user_list_url %}
+                    active
+                {% endif %}"
+                aria-current="page" 
+                href="{% url 'users:user_list' %}">
+                People
+            </a>
+        </li>
+    {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle 
+            {% if request.path == user.get_absolute_url or request.path == change_password_url or request.path == logout_url %}
+            active
+            {% endif %}"
+                id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                {{ user.first_name }} {{ user.last_name }}
+            </a>
+            <ul class="dropdown-menu" 
+                aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item 
+                    {% if request.path == user.get_absolute_url %}
+                    active
+                    {% endif %}" 
+                    href="{{ user.get_absolute_url }}">
+                        Profile
+                    </a>
+                </li>
+                <li><a class="dropdown-item 
+                    {% if request.path == change_password_url %}
+                    active
+                    {% endif %}" 
+                    href="{% url 'account_change_password' %}?next={{ request.path }}">
+                        Change Password
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item
+                    {% if request.path == logout_url %}
+                    active
+                    {% endif %}" 
+                    href="{% url 'account_logout' %}?next={{ request.path }}">
+                        Log Out
+                    </a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+    </ul>
+    <form class="space-for-search d-flex">
+        {% if not user.is_authenticated %}
+            <a class="navbar-button-left btn 
+                                btn-outline-dark" 
+                href="{% url 'account_login' %}?next={{ request.path }}" 
+                role="button">
+                Log In
+            </a>
+            <a class="mybtn btn btn-success" 
+                href="{% url 'account_signup' %}" 
+                role="button">
+                Sign Up
+            </a>
+        {% endif %}
+    </form>
+</div>
+</div>
 </nav>

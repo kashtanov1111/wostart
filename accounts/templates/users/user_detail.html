@@ -17,9 +17,9 @@
                     {% endif %}
                 </div>
                 <div class='col-md col-12'>
-                  <h5 class="card-title">{{ person.first_name }} 
+                  <h2 class="card-title">{{ person.first_name }} 
                     {{ person.last_name}} | @{{ person.username }}
-                  </h5>
+                  </h2>
                   <h6 class="card-subtitle mb-2 text-muted">
                     Joined: {{ person.date_joined|date:'F jS, Y' }}
                   </h6>
@@ -34,9 +34,9 @@
                         <b>Startup{{ person_startups|pluralize}}</b>:
                         {% for startup in person_startups %}{% comment%}
                           {%endcomment%}{% if forloop.counter >= 2 %}{% comment%}
-                          {%endcomment%}, {{ startup.title }}{% comment%}  
+                          {%endcomment%}, <a href="{{ startup.get_absolute_url}}">{{ startup.title }}</a>{% comment%}  
                           {%endcomment%}{% else %}{% comment%}
-                          {%endcomment%}{{ startup.title }}{% comment%}
+                          {%endcomment%}<a href="{{ startup.get_absolute_url}}">{{ startup.title }}</a>{% comment%}
                           {%endcomment%}{% endif %}{% comment%}
                         {%endcomment%}{% endfor %}{% comment%}
                     {%endcomment%}</p>

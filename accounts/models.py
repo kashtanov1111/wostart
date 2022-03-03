@@ -57,7 +57,7 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='profile'
         )
-    about = models.TextField(null=True, blank=True)
+    about = models.TextField(max_length=1500, null=True, blank=True)
     instagram = models.CharField(max_length=100, blank=True, null=True)
     twitter = models.CharField(max_length=100, blank=True, null=True)
     mobile_phone = models.BigIntegerField(blank=True, null=True)

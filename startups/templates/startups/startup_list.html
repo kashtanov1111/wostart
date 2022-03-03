@@ -5,7 +5,7 @@
         <h1 class='text-center'>Startups</h1>
         {% include 'startups/snippets/startup_list_get_form.html' %}
         <div class="row row-cols-1 g-2">
-            {% for startup in object_list %}
+            {% for startup in startup_list %}
                 {% include 'startups/snippets/startup_card.html' %}
             {% endfor %}
         </div>

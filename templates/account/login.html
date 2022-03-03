@@ -10,8 +10,17 @@
                 <form class='form-margin' action="" method='post'>
                     <h1>Log In</h1>
                     {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-block alert-danger">
+                            {% if form_error_title %}<h4 
+                            class="alert-heading">
+                            {{ form_error_title }}</h4>{% endif %}
+                            <ul class="m-0">
+                                {{ form.non_field_errors|unordered_list }}
+                            </ul>
+                        </div>
+                    {% endif %}
                     {% for field in form %}
-                        {{ field.errors }}
                             <div class='my-1'>
                                 {{ field|as_crispy_field }}
                             </div>

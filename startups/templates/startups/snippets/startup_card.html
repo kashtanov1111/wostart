@@ -5,17 +5,36 @@
         href="{{ startup.get_absolute_url }}">
     <div class='card'>
         <div class="card-body">
-            <div class='col-auto px-1'>
-                <h5 class="card-title">
-                    {{ startup.title }}
-                </h5>
+            <div class='row justify-content-between'>
+                <div class='col-md'>
+                    {% comment %} <div class='col-auto px-1'> {% endcomment %}
+                        <h5 class="card-title">
+                            {{ startup.title }}
+                        </h5>
+                    {% comment %} </div> {% endcomment %}
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Founded: {{ startup.founded|date:'F jS, Y' }}
+                    </h6>
+                    <p class="card-text">
+                        {{ startup.description|truncatewords:50 }}
+                    </p>
+                </div>
+                {% if request.path == user_startups_url %}
+                <div class='col-md-auto my-md-0 my-2'>
+                    <object  type="owo/uwu">
+                        <a class='btn btn-outline-dark' href="">
+                            Edit
+                        </a>
+                    </object>
+                    <object  type="owo/uwu">
+                        <a class='btn btn-outline-danger' 
+                            href="{{ startup.get_delete_url }}?back=/startups/my/">
+                            Delete
+                        </a>
+                    </object>
+                </div>
+                {% endif %}
             </div>
-            <h6 class="card-subtitle mb-2 text-muted">
-                Founded: {{ startup.founded|date:'F jS, Y' }}
-            </h6>
-            <p class="card-text">
-                {{ startup.description|truncatewords:50 }}
-            </p>
         </div>
         {% if startup.web_site %}
             <div class='card-footer'>

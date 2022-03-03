@@ -1,0 +1,23 @@
+{% extends 'startups/base_startups.html' %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>My Startup{{ object_list|pluralize}}</h1>
+        <div class="row row-cols-1 g-2">
+            {% for startup in object_list %}
+                {% include 'startups/snippets/startup_card.html'%}
+            {% endfor %}
+        </div>
+        {% if not object_list %}
+        <div class='row'>
+            <div class='col-md-6 text-center mx-auto'>
+                <p>You haven't added any startups yet.</p>
+                <a class='btn btn-outline-dark'
+                    href="">
+                    Add Startup
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}

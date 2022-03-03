@@ -177,6 +177,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm',
     'login': 'accounts.forms.CustomLoginForm',
+    'change_password': 'accounts.forms.CustomChangePasswordForm',
 }
 
 
