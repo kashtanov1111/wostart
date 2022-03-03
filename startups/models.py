@@ -29,7 +29,7 @@ class StartupManager(models.Manager):
         return self.get_queryset().search(query)
 
 class Startup(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=60)
     slug = models.SlugField(null=True, blank=True, unique=True)
     description = models.TextField(max_length=1500)
     web_site = models.URLField(blank=True, null=True)
@@ -52,7 +52,7 @@ class Startup(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
-        slugified_title = slugify(self.title[:30])
+        slugified_title = slugify(self.title[:40])
         if not self.slug == slugified_title:
             self.slug = slugified_title
             while Startup.objects.filter(slug=self.slug).exists():

@@ -1,5 +1,6 @@
 from ast import Delete
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, UserPassesTestMixin)
 from django.shortcuts import render, redirect
 from django.views.generic import (
     ListView, DetailView, DeleteView,
@@ -67,7 +68,8 @@ class UserStartupsListView(LoginRequiredMixin, ListView):
             .filter(founder=self.request.user))
         return self.queryset
 
-class StartupDeleteView(DeleteView):
+class StartupDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Startup
     success_url = reverse_lazy('startups:user_startups')
 
@@ -75,3 +77,7 @@ class StartupDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['back'] = self.request.GET.get('back')
         return context
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.founder == self.request.user 

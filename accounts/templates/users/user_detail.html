@@ -30,16 +30,18 @@
                   {% endif %}
                   {% with person.startups.all as person_startups %}
                   {% if person_startups %}
-                    <p class='card-text'>
+                    <p class='card-text mb-0'>
                         <b>Startup{{ person_startups|pluralize}}</b>:
-                        {% for startup in person_startups %}{% comment%}
-                          {%endcomment%}{% if forloop.counter >= 2 %}{% comment%}
-                          {%endcomment%}, <a href="{{ startup.get_absolute_url}}">{{ startup.title }}</a>{% comment%}  
-                          {%endcomment%}{% else %}{% comment%}
-                          {%endcomment%}<a href="{{ startup.get_absolute_url}}">{{ startup.title }}</a>{% comment%}
-                          {%endcomment%}{% endif %}{% comment%}
-                        {%endcomment%}{% endfor %}{% comment%}
-                    {%endcomment%}</p>
+                    </p>
+                    <ul>
+                      {% for startup in person_startups %}
+                        <li>
+                          <a href="{{ startup.get_absolute_url}}">
+                            {{ startup.title }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
                   {% endif %}
                   {% endwith %}
                   <p class='card-text'><b>Email: </b>
