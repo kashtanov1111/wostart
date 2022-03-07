@@ -22,13 +22,14 @@
                 {% if request.path == user_startups_url %}
                 <div class='col-md-auto my-md-0 my-2'>
                     <object  type="owo/uwu">
-                        <a class='btn btn-outline-dark' href="">
+                        <a class='btn btn-outline-dark'
+                            href="{{ startup.get_update_url }}?">
                             Edit
                         </a>
                     </object>
                     <object  type="owo/uwu">
                         <a class='btn btn-outline-danger' 
-                            href="{{ startup.get_delete_url }}?back=/startups/my/">
+                            href="{{ startup.get_delete_url }}?next=/startups/my/">
                             Delete
                         </a>
                     </object>

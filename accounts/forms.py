@@ -78,6 +78,6 @@ class UserProfileForm(forms.ModelForm):
             'about', 'instagram', 'twitter', 'mobile_phone','avatar',
             ]
         widgets = {
-            'avatar': forms.FileInput(attrs={'class': 'form-control'}), 
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'}), 
         }
 

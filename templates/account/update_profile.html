@@ -8,20 +8,36 @@
     <div class='row'>
         <div class='col-md-6 mx-auto'>
             <h1 class='text-center'>You can change your profile here.</h1>
-            <form enctype="multipart/form-data" action="" method='post'>
+            <form id='startup_form' enctype="multipart/form-data" action="" method='post'>
                 {% csrf_token %}
                 {{ 1form|crispy }}
                 {{ 2form|crispy }}
                 {% if request.user.profile.avatar %}
                     <div class='row'>
                         <div class='col-12 my-1'>
-                            <img src="{{ avatar_url }}" width='300px'>
+                            <img id='target' src="{{ avatar_url }}" width='300px'>
                         </div>
                     </div>
                 {% endif %}
-                <button class='btn btn-success' type='submit'>Save</button>
+                <button class='mybtn btn btn-success' type='submit'>Save</button>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        function showImage(src,target) {
+            var fr=new FileReader();
+            // when image is loaded, set the src of the image where you want to display it
+            fr.onload = function(e) { target.src = this.result; };
+            src.addEventListener("change",function() {
+              // fill fr with image data    
+              fr.readAsDataURL(src.files[0]);
+            });
+          }
+          var src = document.getElementById("id_avatar");
+          var target = document.getElementById("target");
+          showImage(src,target);
+    })
+</script>
 {% endblock content %}

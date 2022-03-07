@@ -1,6 +1,10 @@
 {% extends 'startups/base_startups.html' %}
 {% load static %}
 
+{% block title %}
+{{ block.super }} - {{ startup.title }}
+{% endblock title %}
+
 {% block content %}
     <div class='container'>
         <h1 class='text-center'>Startup Profile</h1>
@@ -12,8 +16,22 @@
                     <h6 class="card-subtitle mb-2 text-muted">
                         Founded: {{ startup.founded|date:'F jS, Y' }}
                     </h6>
+                </div>
+                {% if startup.founder == user %}
+                <div class='col-md-auto'>
+                    <a class='btn btn-outline-dark'
+                        href="{{ startup.get_update_url }}?">
+                        Edit
+                    </a>
+                    <a class='btn btn-outline-danger' 
+                        href="{{ startup.get_delete_url }}?next=/startups/my/">
+                        Delete
+                    </a>
+                </div>
+                {% endif %}
+                <div class='col-md-12'>
                     <p class="card-text">
-                        {{ startup.description }}
+                        {{ startup.description|linebreaks }}
                     </p>
                     <p class='card-text'><b>Founder: </b>
                         <a href="{{ startup.founder.get_absolute_url}}">
@@ -29,11 +47,9 @@
                         </p>
                     {% endif %}
                 </div>
-                {% with startup.images.all as startup_images %}
                     {% if startup_images %}
                         {% include 'startups/snippets/carousel_startup.html' %}
                     {% endif %}
-                {% endwith %}
               </div>
             </div>
           </div>

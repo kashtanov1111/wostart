@@ -51,3 +51,10 @@ a {
     background-color: rgb(0, 184, 184);
     border-color: rgb(0, 184, 184);
 }
+
+.my-form-control {
+    border-radius: unset;
+    border: unset;
+    border-color: #ced4da;
+    border-top: 1px solid #ced4da;
+}

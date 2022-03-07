@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse, reverse_lazy
 
 from tags.models import Tag
+from config.validators import OptionalSchemeURLValidator
 
 class StartupQueryset(models.QuerySet):
 
@@ -29,11 +30,18 @@ class StartupManager(models.Manager):
         return self.get_queryset().search(query)
 
 class Startup(models.Model):
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60,
+        help_text='Please enter the title for your startup.')
     slug = models.SlugField(null=True, blank=True, unique=True)
-    description = models.TextField(max_length=1500)
-    web_site = models.URLField(blank=True, null=True)
-    founded = models.DateField(null=True)
+    description = models.TextField(max_length=1500,
+        help_text='Please tell us something about your startup.')
+    web_site = models.CharField(max_length=200, blank=True, null=True,
+        help_text='Please enter the URL of your Startup.',
+        verbose_name='Web-site',
+        validators=[OptionalSchemeURLValidator()])
+    founded = models.DateField(null=True,
+        help_text='Please enter the date when your startup was founded.',
+        verbose_name='Founding Date')
     founder = models.ForeignKey(
         get_user_model(), 
         on_delete=models.CASCADE, related_name='startups')
@@ -46,6 +54,10 @@ class Startup(models.Model):
 
     def get_delete_url(self):
         return reverse('startups:startup_delete', 
+                        kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('startups:startup_update', 
                         kwargs={'slug': self.slug})
 
     def __str__(self):

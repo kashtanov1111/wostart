@@ -10,3 +10,4 @@ class StartupAdmin(admin.ModelAdmin):
     inlines = [ PropertyImageInline, ]
 
 admin.site.register(Startup, StartupAdmin)
+admin.site.register(StartupImage)

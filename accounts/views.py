@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.shortcuts import render
 from django.views.generic import (
@@ -36,7 +37,7 @@ class UpdateUserProfileView(LoginRequiredMixin, View):
         if bound_form1.is_valid() and bound_form2.is_valid():
             bound_form1.save()
             bound_form2.save()
-            return redirect('update_profile')
+            return redirect(request.user)
         else:
             return render(
                 request,
@@ -85,7 +86,7 @@ class UserListView(PageLinksMixin, ListView):
             self.queryset = self.queryset.search(query)
         if self.request_only_startups == 'on':
             self.queryset = (self.queryset
-                            .filter(profile__startups__isnull=False))
+                            .filter(startups__isnull=False))
         return super().get_queryset()
     
     def get_ordering(self):

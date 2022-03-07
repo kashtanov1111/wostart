@@ -1,0 +1,85 @@
+{% extends 'startups/base_startups.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+{{ block.super }} - Edit Startup
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <div class='col-md-6 mx-auto'>
+            <h1>Edit your startup</h1>
+            <form action="" enctype='multipart/form-data' method='post'>
+                {% csrf_token %}
+                {{ form_class|crispy }}
+                <p class='mb-0'>Images</p>
+                {{ formset.management_form}}
+                {% for f in formset %}
+                    <div style='border-radius: .25rem; border: 1px solid #ced4da;'
+                        class='mb-2'>
+                        {% for field in f %}
+                        {{ field.errors}}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <span class="helptext">
+                        {{ field.help_text }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div style='line-height:0px'
+                    class='row justify-content-center my-2'>
+                    {% for image in startup_images %}
+                        {% if image.image %}
+                            <div class='col-2 px-1'>
+                                <img class='targeted' 
+                                    width='100%'
+                                    src="{{ image.image.url}}" >
+                            </div>
+                        {% else %}
+                            <div class='col-2 px-1'>
+                                <img class='targeted'
+                                    width='100%'
+                                    src="">
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                    {% endfor %}
+                    {% for i in startup_images_additional %}
+                        <div class='col-2 px-1'>
+                            <img class='targeted'
+                                width='100%'
+                                src="">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class='mybtn btn btn-success my-2' 
+                        type='submit'>
+                    Save    
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+            function showImage(src,target) {
+                var fr=new FileReader();
+                // when image is loaded, set the src of the image where you want to display it
+                fr.onload = function(e) { target.src = this.result; };
+                src.addEventListener("change",function() {
+                  // fill fr with image data    
+                  fr.readAsDataURL(src.files[0]);
+                });
+            }
+            var all_src = [];
+            for (var i = 0; i < 5; i++){
+                all_src.push($('#id_form-'+i.toString()+'-image')[0])
+            }
+            var targeted = $('.targeted');
+            targeted.each(function(i, obj){
+                if (i < 5){
+                    showImage(all_src[i], obj)
+                }
+            })
+    </script>
+{% endblock content %}

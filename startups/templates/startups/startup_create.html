@@ -1,0 +1,58 @@
+{% extends 'startups/base_startups.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+{{ block.super }} - Add Startup
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <div class='col-md-6 mx-auto'>
+            <h1>Add your startup</h1>
+            <form action="" enctype='multipart/form-data' method='post'>
+                {% csrf_token %}
+                {{ form_class|crispy }}
+                <output class='row justify-content-center my-2' id='result'></output>
+                <button class='mybtn btn btn-success my-2' 
+                        type='submit'>
+                    Save    
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+            window.onload = function() {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader) {
+                  var filesInput = document.getElementById("id_images");
+                  filesInput.addEventListener("change", function(event) {
+                    var files = event.target.files; //FileList object
+                    var output = document.getElementById("result");
+                    output.innerHTML = '';
+                    for (var i = 0; i < 5; i++) {
+                      var file = files[i];
+                      //Only pics
+                      if (!file.type.match('image'))
+                        continue;
+                      var picReader = new FileReader();
+                      
+                      picReader.addEventListener("load", function(event) {
+                        var picFile = event.target;
+                        var div = document.createElement('div');
+                        div.classList.add('col-2')
+                        div.classList.add('px-1')
+                        div.innerHTML = "<img width='100%' src='" + picFile.result + "'" +
+                          "title='" + picFile.name + "'/>";
+                        output.insertBefore(div, null);
+                      });
+                      //Read the image
+                      picReader.readAsDataURL(file);
+                    }
+                  });
+                } else {
+                  console.log("Your browser does not support File API");
+                }
+              }
+    </script>
+{% endblock content %}
