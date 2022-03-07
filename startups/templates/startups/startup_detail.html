@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-{{ block.super }} - {{ startup.title }}
+{{ block.super }} - Startup Profile
 {% endblock title %}
 
 {% block content %}
@@ -20,11 +20,11 @@
                 {% if startup.founder == user %}
                 <div class='col-md-auto'>
                     <a class='btn btn-outline-dark'
-                        href="{{ startup.get_update_url }}?">
+                        href="{{ startup.get_update_url }}">
                         Edit
                     </a>
                     <a class='btn btn-outline-danger' 
-                        href="{{ startup.get_delete_url }}?next=/startups/my/">
+                        href="{{ startup.get_delete_url }}?next={{ request.path }}">
                         Delete
                     </a>
                 </div>

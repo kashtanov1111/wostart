@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from . import views
-from accounts.views import UpdateUserProfileView
+from accounts.views import (
+    UpdateUserProfileView, CustomPasswordChangeView)
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
+    path('accounts/password/change/',
+        CustomPasswordChangeView.as_view(),
+        name='account_change_password'),
     path('accounts/', include('allauth.urls')),
     path('users/', include('accounts.urls')),
     path('startups/', include('startups.urls')),

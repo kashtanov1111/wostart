@@ -1,6 +1,6 @@
-from csv import excel_tab
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, UserPassesTestMixin)
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms import modelformset_factory
 from django.forms.widgets import ClearableFileInput
 from django.http import JsonResponse, Http404
@@ -51,7 +51,8 @@ class StartupListView(PageLinksMixin, ListView):
             self.queryset = self.queryset.search(query)
         if self.request_only_websites == 'on':
             self.queryset = (self.queryset
-                            .filter(web_site__isnull=False))
+                            .filter(web_site__isnull=False)
+                            .distinct())
         return super().get_queryset()
     
     def get_ordering(self):
@@ -67,7 +68,7 @@ class StartupDetailView(View):
             startup_obj = (self.model.objects
                             .select_related('founder')
                             .get(slug=self.kwargs['slug']))
-        except startup_obj.DoesNotExist:
+        except ObjectDoesNotExist:
             raise Http404()
         startup_images = startup_obj.images.exclude(image='')
         return render(request, self.template_name,
@@ -80,7 +81,7 @@ class UserStartupsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         self.queryset = (self.model.objects
-            .filter(founder=self.request.user))
+            .filter(founder=self.request.user).order_by('founded'))
         return self.queryset
 
 class StartupDeleteView(

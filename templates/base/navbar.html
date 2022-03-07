@@ -19,7 +19,7 @@
         <li class="nav-item">
             <a class="nav-link 
             {% if request.path == about_url %}active{% endif %}"
-            aria-current="page" href="{% url 'about' %}">
+            aria-current="page" href="{{ about_url }}">
                 About
             </a>
         </li>
@@ -31,7 +31,10 @@
             </a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" 
+            <a class="nav-link dropdown-toggle 
+                {% if request.path == startup_list_url or request.path == user_startups_url or request.path == startup_create_url %}
+                active
+                {% endif %}" 
                 href="#" id="navbarDropdownStartups" role="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false">
@@ -44,7 +47,7 @@
                         {% if request.path == startup_list_url %}
                         active
                         {% endif %}" 
-                        href="{% url 'startups:startup_list' %}">
+                        href="{{ startup_list_url }}">
                         Startups
                     </a>
                 </li>
@@ -55,16 +58,16 @@
                         {% if request.path == user_startups_url %}
                         active
                         {% endif %}" 
-                        href="{% url 'startups:user_startups' %}">
+                        href="{{ user_startups_url }}">
                         My Startups
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item
-                        {% if request.path == startup_list_url %}
+                        {% if request.path == startup_create_url %}
                         active
                         {% endif %}" 
-                        href="{% url 'startups:startup_list' %}">
+                        href="{{ startup_create_url }}">
                         Add Startup
                     </a>
                 </li>
@@ -106,7 +109,7 @@
                     {% if request.path == change_password_url %}
                     active
                     {% endif %}" 
-                    href="{% url 'account_change_password' %}?next={{ request.path }}">
+                    href="{{ change_password_url }}?next={{ request.path }}">
                         Change Password
                     </a>
                 </li>
@@ -115,7 +118,7 @@
                     {% if request.path == logout_url %}
                     active
                     {% endif %}" 
-                    href="{% url 'account_logout' %}?next={{ request.path }}">
+                    href="{{ logout_url }}?next={{ request.path }}">
                         Log Out
                     </a>
                 </li>

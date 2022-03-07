@@ -11,7 +11,7 @@ class TitleCleanMixin:
         new_title = self.cleaned_data['title'].lower()
         if new_title == 'my' or new_title == 'add':
             raise ValidationError(
-                'Title may not be "my"'
+                'Title may not be "my" or "add"'
             )
         return new_title
 

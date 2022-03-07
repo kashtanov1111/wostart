@@ -4,7 +4,6 @@
     <div class="carousel-inner">
         {% for image_object in startup_images %}
         {% comment %} {% if image_object.image %} {% endcomment %}
-        <p>asdfds</p>
         {% if forloop.counter == 1 %}
             <div class="carousel-item active">
                 <img  src="{{ image_object.image.url}}"

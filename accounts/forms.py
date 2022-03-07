@@ -38,13 +38,8 @@ class CustomSignupForm(SignupForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['first_name'].label = False
-        self.fields['last_name'].label = False
-        self.fields['email'].label = False
-        self.fields['username'].label = False
-        self.fields['password1'].label = False
-        self.fields['password2'].label = False
-
+        for key in ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']:
+            self.fields[key].label = False
         
     def save(self, request):
         user = super().save(request)
@@ -78,6 +73,7 @@ class UserProfileForm(forms.ModelForm):
             'about', 'instagram', 'twitter', 'mobile_phone','avatar',
             ]
         widgets = {
-            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'}), 
+            'avatar': forms.ClearableFileInput(
+                    attrs={'class': 'form-control'}), 
         }
 

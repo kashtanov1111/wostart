@@ -1,9 +1,10 @@
+from allauth.account.views import PasswordChangeView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from django.db.models import Q
-from django.http import JsonResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import (
     View, ListView, DetailView,
 )
@@ -16,17 +17,20 @@ class UpdateUserProfileView(LoginRequiredMixin, View):
     form_class1 = CustomUserChangeForm
     form_class2 = UserProfileForm
 
-    def get(self, request):
+    def check_avatar(self, request):
         if request.user.profile.avatar:
             avatar_url = request.user.profile.avatar.url
         else:
             avatar_url = None
+        return avatar_url
+
+    def get(self, request):
         return render(
             request,
             self.template_name,
             {'1form': self.form_class1(instance=request.user),
             '2form': self.form_class2(instance=request.user.profile),
-            'avatar_url': avatar_url}
+            'avatar_url': self.check_avatar(request)}
         )
 
     def post(self, request):
@@ -44,7 +48,7 @@ class UpdateUserProfileView(LoginRequiredMixin, View):
                 self.template_name,
                 {'1form': bound_form1,
                 '2form': bound_form2,
-                'avatar_url': request.user.profile.avatar.url}
+                'avatar_url': self.check_avatar(request)}
             )
 
 class UserListView(PageLinksMixin, ListView):
@@ -86,7 +90,8 @@ class UserListView(PageLinksMixin, ListView):
             self.queryset = self.queryset.search(query)
         if self.request_only_startups == 'on':
             self.queryset = (self.queryset
-                            .filter(startups__isnull=False))
+                            .filter(startups__isnull=False)
+                            .distinct())
         return super().get_queryset()
     
     def get_ordering(self):
@@ -94,11 +99,27 @@ class UserListView(PageLinksMixin, ListView):
             self.ordering = 'date_joined'
         return self.ordering
 
-class UserDetailView(DetailView):
+class UserDetailView(View):
     model = get_user_model()
-    context_object_name = 'person'
     template_name = 'users/user_detail.html'
     
-    def get_object(self):
-        return get_object_or_404(
-            self.model, username=self.kwargs['username'])
+    def get(self, request, **kwargs):
+        try:
+            user_obj = (self.model.objects
+                .select_related('profile')
+                .get(username=self.kwargs['username']))
+        except ObjectDoesNotExist:
+            raise Http404()
+        person_startups = user_obj.startups.all()
+        has_avatar = user_obj.profile.avatar
+        return render(request, self.template_name,
+            {'person': user_obj,
+            'person_startups': person_startups,
+            'has_avatar': has_avatar})
+
+class CustomPasswordChangeView(PasswordChangeView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next'] = self.request.GET.get('next')
+        return context
