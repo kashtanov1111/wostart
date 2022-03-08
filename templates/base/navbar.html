@@ -23,12 +23,49 @@
                 About
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link 
-            {% if request.path == about_url %}active{% endif %}"
-            aria-current="page" href="{% url 'about' %}">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle 
+                {% if request.path == ad_list_url or request.path == user_startups_url or request.path == startup_create_url %}
+                active
+                {% endif %}" 
+                href="#" id="navbarDropdownStartups" role="button" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
                 Ads
             </a>
+            <ul class="dropdown-menu" 
+                aria-labelledby="navbarDropdownStartups">
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == ad_list_url %}
+                        active
+                        {% endif %}" 
+                        href="{{ ad_list_url }}">
+                        Ads
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == user_startups_url %}
+                        active
+                        {% endif %}" 
+                        href="{{ user_startups_url }}">
+                        My Ads
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == startup_create_url %}
+                        active
+                        {% endif %}" 
+                        href="{{ startup_create_url }}">
+                        Create Ad
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle 
@@ -73,7 +110,7 @@
                 </li>
                 {% endif %}
             </ul>
-            </li>
+        </li>
         <li class="nav-item">
             <a class="nav-link 
                 {% if request.path == user_list_url %}
@@ -84,7 +121,9 @@
                 People
             </a>
         </li>
+    </ul>
     {% if user.is_authenticated %}
+        <div class='navbar-nav d-flex'>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle 
             {% if request.path == user.get_absolute_url or request.path == change_password_url or request.path == logout_url %}
@@ -124,8 +163,8 @@
                 </li>
             </ul>
         </li>
+    </div>
     {% endif %}
-    </ul>
     <form class="space-for-search d-flex">
         {% if not user.is_authenticated %}
             <a class="navbar-button-left btn 

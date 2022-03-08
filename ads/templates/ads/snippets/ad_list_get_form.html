@@ -1,0 +1,98 @@
+<form action="" method='get'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-8 col-12 px-1 my-1'>
+                <input class="form-control me-2 py-3" 
+                    type="search" name='q' 
+                placeholder="Search" aria-label="Search" 
+                value={% if query %}{{ query }}{% endif %}>
+            </div>
+            <div class='col-md-2 col-6 form-floating px-1 my-1'>
+                <select class="form-select" 
+                    aria-label="Default select example"
+                    id='floatingSelect'
+                    name='paginate_by'>
+                    <option {% if pag_by == "1" %}selected
+                    {% endif %}value="1">1</option>
+                    <option {% if pag_by == "2" %}selected
+                    {% endif %} value="2">2</option>
+                    <option {% if pag_by == "3" %}selected
+                    {% endif %}value="3">3</option>
+                </select>
+                <label for="floatingSelect">Show by</label>
+            </div>
+            <div class='col-md-2 col-6 form-floating px-1 my-1'>
+                <select class="form-select" 
+                    aria-label="Sort by"
+                    id='floatingSelectOrder'
+                    name='sort_by'>
+                    <option {% if sort_by == "new" or sort_by == None %}
+                        selected
+                    {% endif %} value="new">New</option>
+                    <option {% if sort_by == "old" %}selected
+                    {% endif %}value="old">Old</option>
+                </select>
+                <label for="floatingSelectOrder">Sort by</label>
+            </div>
+            <div class="col-md-auto col-auto form-check form-switch ms-1 me-3 mx-md-1 pe-1">
+                <input class="form-check-input" type="checkbox" 
+                    role="switch" id="flexSwitchCheckDefault"
+                    name='only_startups'
+                    {% if only_startups == 'on' %}
+                        checked
+                    {% endif %}>
+                <label class="form-check-label"
+                    for="flexSwitchCheckDefault">
+                    Only with startup</label>
+            </div>
+            <div class='col-md-auto col-auto ps-1'>
+            <div class=" form-check">
+                <input class="form-check-input" type="radio" 
+                name="only_who" id="exampleRadios1" 
+                value="co_founders" 
+                {% if only_who == 'co_founders' %}
+                checked
+                {% endif %}>
+                <label class="form-check-label" for="exampleRadios1">
+                    Only Co-founders
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio"
+                name="only_who" id="exampleRadios2"
+                value="employees"
+                {% if only_who == 'employees' %}
+                checked
+                {% endif %}>
+                <label class="form-check-label" for="exampleRadios2">
+                  Only Employees
+                </label>
+            </div>
+            </div>
+            <label class='col-md-auto col-auto ps-1 pe-1' for="min">Share:</label>
+            <div class='col-md-1 col-2 px-1'>
+                <input id='min' class="form-control me-2 p-0" 
+                    type="number" name='min' 
+                placeholder="min" aria-label="Share" 
+                value={% if min %}{{ min }}{% endif %}>
+            </div>
+            <div class='col-md-1 col-2 px-1 me-2'>
+                <input class="form-control me-2 p-0" 
+                    type="number" name='max' 
+                placeholder="max" aria-label="Share" 
+                value={% if max %}{{ max }}{% endif %}>
+            </div>
+            <div class="col-md-auto col-auto form-check mx-1">
+                <input class="form-check-input" 
+                    type="checkbox" value="yes" id="defaultCheck1"
+                    name='clear_all'>
+                <label class="form-check-label" for="defaultCheck1">
+                  Clear all
+                </label>
+            </div>
+            <button class='col-md-auto col-12 mybtn btn btn-success mb-2 mt-md-0 mt-1' 
+                    type='submit'>Submit
+            </button>
+        </div>
+    </div>
+    </form>

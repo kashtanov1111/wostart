@@ -1,0 +1,60 @@
+{% load static %}
+
+<div class="col-12">
+    <a style='color:#212529' 
+        href="{{ ad.get_absolute_url }}">
+    <div class='card'>
+        <div class="card-body">
+            <div class='row justify-content-between'>
+                <div class='col-md'>
+                    <h5 class="card-title">
+                        {{ ad.title }}
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Created: {{ ad.created|date:'F jS, Y h:i A' }}
+                    </h6>
+                    <p class="card-text mb-2">
+                        {{ ad.description|truncatewords:50 }}
+                    </p>
+                    <p class="card-text">
+                        {{ ad.position_verbose }} | 
+                        {{ ad.share|floatformat}}% | 
+                        <a href="{{ ad.user.get_absolute_url}}">
+                            {{ ad.user.first_name }} 
+                            {{ ad.user.last_name}}
+                        </a>
+                    </p>
+                </div>
+                {% if request.path == user_startups_url %}
+                <div class='col-md-auto my-md-0 my-2'>
+                    <object  type="owo/uwu">
+                        <a class='btn btn-outline-dark'
+                            href="{{ ad.get_update_url }}?">
+                            Edit
+                        </a>
+                    </object>
+                    <object  type="owo/uwu">
+                        <a class='btn btn-outline-danger' 
+                            href="{{ ad.get_delete_url }}?next=/startups/my/">
+                            Delete
+                        </a>
+                    </object>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if ad.startup %}
+            <div class='card-footer'>
+                <p class='mb-0'>
+                    Startup: 
+                    <object  type="owo/uwu">   
+                        <a href='{{ ad.startup.get_absolute_url }}'>
+                            {{ ad.startup }}
+                        </a>
+                    </object>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+    </a>
+</div>

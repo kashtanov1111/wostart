@@ -12,6 +12,10 @@ from django.views.generic import (
 from .forms import CustomUserChangeForm, UserProfileForm
 from config.utils import PageLinksMixin
 
+# asdfasdfsdfadsf
+from startups.models import Startup
+# sdfsfsdfsdf
+
 class UpdateUserProfileView(LoginRequiredMixin, View):
     template_name = 'account/update_profile.html'
     form_class1 = CustomUserChangeForm

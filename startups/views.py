@@ -18,7 +18,7 @@ from config.utils import PageLinksMixin
 class StartupListView(PageLinksMixin, ListView):
     paginate_by = 3
     context_object_name = 'startup_list'
-    queryset = Startup.objects.all()
+    queryset = Startup.objects.select_related('founder')
     ordering = '-founded'
 
     def get(self, request, *args, **kwargs):
@@ -70,7 +70,7 @@ class StartupDetailView(View):
                             .get(slug=self.kwargs['slug']))
         except ObjectDoesNotExist:
             raise Http404()
-        startup_images = startup_obj.images.exclude(image='')
+        startup_images = startup_obj.images.exclude(image='').order_by('id')
         return render(request, self.template_name,
             {'startup': startup_obj,
             'startup_images': startup_images})

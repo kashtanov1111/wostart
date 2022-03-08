@@ -1,0 +1,60 @@
+{% extends 'ads/base_ads.html' %}
+
+
+{% block title %}
+{{ block.super }} - Ad Profile
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>Ad Profile</h1>
+        <div class="card">
+            <div class="card-body">
+              <div class='row'>
+                <div class='col-md col-12'>
+                    <h2 class="card-title">{{ ad.title }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Created: {{ ad.created|date:'F jS, Y h:i A' }}
+                    </h6>
+                </div>
+                {% if ad.user == user %}
+                <div class='col-md-auto'>
+                    <a class='btn btn-outline-dark'
+                        href="{{ ad.get_update_url }}">
+                        Edit
+                    </a>
+                    <a class='btn btn-outline-danger' 
+                        href="{{ ad.get_delete_url }}?next={{ request.path }}">
+                        Delete
+                    </a>
+                </div>
+                {% endif %}
+                <div class='col-md-12'>
+                    <p class="card-text">
+                        {{ ad.description|linebreaks }}
+                    </p>
+                    <p class="card-text">
+                        <b>Position:</b> {{ ad.position_verbose }}
+                    </p>
+                    <p class="card-text">
+                        <b>Share:</b> {{ ad.share|floatformat }}%
+                    </p>
+                    <p class='card-text'><b>Advertiser: </b>
+                        <a href="{{ ad.user.get_absolute_url}}">
+                        {{ ad.user.first_name }} 
+                        {{ ad.user.last_name }}
+                        </a>
+                    </p>
+                    {% if ad.startup %}
+                        <p class='card-text'><b>Startup: </b>
+                            <a href="{{ ad.startup.get_absolute_url }}">
+                                {{ ad.startup }}
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+{% endblock content %}

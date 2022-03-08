@@ -18,6 +18,17 @@
                     <p class="card-text">
                         {{ startup.description|truncatewords:50 }}
                     </p>
+                    <p class="card-text">
+                        {% if request.path != user_startups_url %}
+                        Founder:
+                        <object  type="owo/uwu">   
+                            <a href='{{ startup.founder.get_absolute_url }}'>
+                                {{ startup.founder.first_name }} 
+                                {{ startup.founder.last_name }}
+                            </a>
+                        </object>
+                    {% endif %}
+                    </p>
                 </div>
                 {% if request.path == user_startups_url %}
                 <div class='col-md-auto my-md-0 my-2'>

@@ -1,0 +1,20 @@
+{% extends 'ads/base_ads.html' %}
+
+{% block title %}
+{{ block.super }} - Ads
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>Ads</h1>
+        {% include 'ads/snippets/ad_list_get_form.html' %}
+        <div class="row row-cols-1 g-2">
+            {% for ad in ad_list %}
+                {% include 'ads/snippets/ad_card.html' %}
+            {% endfor %}
+        </div>
+        {% block footer %}
+        {{ block.super }}
+        {% endblock footer %}
+    </div>
+{% endblock content %}

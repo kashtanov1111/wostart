@@ -30,6 +30,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('users/', include('accounts.urls')),
     path('startups/', include('startups.urls')),
+    path('ads/', include('ads.urls')),
     path('profile/edit/', UpdateUserProfileView.as_view(), 
             name='update_profile'),
     path('about/', views.AboutPageView.as_view(), name='about'),
