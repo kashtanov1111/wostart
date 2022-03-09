@@ -26,6 +26,11 @@
                 {{ person.profile.about|truncatewords:50 }}
             </p>
             {% endif %}
+            {% if request.path == response_list_url %}
+                <p class='card-text'>
+                    <b>Ad:</b>{{ response.ad.title }}
+                </p>
+            {% endif %}
         </div>
         <div class='card-footer'>   
             <small class='text-muted'>{{ person.email }}</small>

@@ -22,6 +22,8 @@ from . import views
 from accounts.views import (
     UpdateUserProfileView, CustomPasswordChangeView)
 
+from responses.views import response_button_view
+
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
     path('accounts/password/change/',
@@ -31,6 +33,8 @@ urlpatterns = [
     path('users/', include('accounts.urls')),
     path('startups/', include('startups.urls')),
     path('ads/', include('ads.urls')),
+    path('responses/', include('responses.urls')),
+    path('response/', response_button_view, name='response'),
     path('profile/edit/', UpdateUserProfileView.as_view(), 
             name='update_profile'),
     path('about/', views.AboutPageView.as_view(), name='about'),

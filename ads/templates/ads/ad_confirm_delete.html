@@ -1,0 +1,26 @@
+{% extends 'ads/base_ads.html' %}
+
+{% block title %}
+{{ block.super }} - Delete Ad
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-6 text-center mx-auto'>
+                <form method='post'>
+                    {% csrf_token %}
+                    <p>Are you cure you want to delete ad 
+                        <b>{{ object }}</b>?
+                    </p>
+                    <input type="submit" class='btn btn-danger' 
+                        value='Confirm'>
+                    <a class='btn btn-outline-dark'
+                        href="{{ next }}">
+                        Go back
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

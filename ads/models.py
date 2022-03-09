@@ -31,6 +31,7 @@ class AdManager(models.Manager):
 
 class Ad(models.Model):
     POSITIONS = (
+        ('', 'Select'),
         ('F', 'Co-Founder'),
         ('E', 'Employee'),
     )
@@ -62,6 +63,12 @@ class Ad(models.Model):
 
     def get_absolute_url(self):
         return reverse("ads:ad_detail", kwargs={"slug": self.slug})
+
+    def get_update_url(self):
+        return reverse("ads:ad_update", kwargs={"slug": self.slug})
+
+    def get_delete_url(self):
+        return reverse("ads:ad_delete", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         slugified_title = slugify(self.title[:40])

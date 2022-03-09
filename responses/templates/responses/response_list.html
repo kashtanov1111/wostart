@@ -1,0 +1,38 @@
+{% extends 'responses/base_responses.html' %}
+
+{% block title %}
+{{ block.super }} - Responses
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>Responses to my ads</h1>
+        {% include 'responses/snippets/response_list_get_form.html' %}
+        <div class="row row-cols-1 g-2">
+            {% for response in response_list %}
+                {% include 'users/snippets/user_card.html' with person=response.user ad=response.ad%}
+            {% empty %}
+                <div class='row'>
+                    <div class='col-md-6 text-center mx-auto'>
+                        <p class='mb-0 mt-3'>You haven't received any responses yet.</p>
+                        {% if not user.ads.count %}
+                        <a class='mybtn btn btn-success mt-2'
+                            href="{{ ad_create_url}}">
+                            Create Ad
+                        </a>
+                        {% else %}
+                        <p>Please wait or create a new Ad.</p>
+                        <a class='mybtn btn btn-success'
+                            href="{{ ad_create_url}}">
+                            Create Ad
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% block footer %}
+        {{ block.super }}
+        {% endblock footer %}
+    </div>
+{% endblock content %}

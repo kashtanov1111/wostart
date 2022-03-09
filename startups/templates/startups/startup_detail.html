@@ -33,12 +33,12 @@
                     <p class="card-text">
                         {{ startup.description|linebreaks }}
                     </p>
-                    <p class='card-text'><b>Founder: </b>
+                    {% comment %} <p class='card-text'><b>Founder: </b>
                         <a href="{{ startup.founder.get_absolute_url}}">
                         {{ startup.founder.first_name }} 
                         {{ startup.founder.last_name }}
                         </a>
-                    </p>
+                    </p> {% endcomment %}
                     {% if startup.web_site %}
                         <p class='card-text'><b>Web-site: </b>
                             <a href="{{ startup.web_site }}">

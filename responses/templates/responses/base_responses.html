@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+{% load url_replace %}
+
+{% block footer %}
+{% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center my-3">
+        {% if first_page_url %}
+            <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=1 %}">
+                    First
+                </a>
+            </li>
+        {% endif %}
+        {% if previous_page_url %}
+            <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">
+                    &laquo;
+                </a>
+            </li>
+        {% endif %}
+        <li class="page-item active">
+            <a class="page-link" href="#">
+                {{ page_obj.number }}
+            </a>
+        </li>
+        {% if next_page_url %}
+            <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">
+                    &raquo;
+                </a>
+            </li>
+        {% endif %}
+        {% if last_page_url %}
+            <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=paginator.num_pages %}">
+                    Last
+                </a>
+            </li>
+        {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock footer %}

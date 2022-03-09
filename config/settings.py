@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'startups',
     'tags',
     'ads',
+    'responses',
 ]
 
 MIDDLEWARE = [

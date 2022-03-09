@@ -1,14 +1,18 @@
 from decimal import Decimal as D
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import (
     ListView, View, DetailView, DeleteView, UpdateView, CreateView
 )
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 from config.utils import PageLinksMixin
+from responses.models import Response
 
 from .models import Ad
+from .forms import AdForm
 
 class AdListView(PageLinksMixin, ListView):
     paginate_by = 3
@@ -43,6 +47,8 @@ class AdListView(PageLinksMixin, ListView):
         context['only_who'] = self.request_only_who
         context['min'] = self.request_share_min
         context['max'] = self.request_share_max
+        if self.request.user.is_authenticated:
+            context['ads_user_responded'] = self.request.user.responses.values_list('ad_id', flat=True)
         if context['pag_by'] is None:
             context['pag_by'] = str(self.paginate_by)
         return context
@@ -74,8 +80,102 @@ class AdListView(PageLinksMixin, ListView):
     def get_ordering(self):
         if self.request_sort_by == 'old':
             self.ordering = 'created'
+        elif self.request_sort_by == 'small':
+            self.ordering = 'share'
+        elif self.request_sort_by == 'big':
+            self.ordering = '-share'
         return self.ordering
 
 class AdDetailView(DetailView):
     model = Ad
+    queryset = (
+        model.objects.select_related('user').select_related('startup'))
+
+class UserAdsListView(ListView):
+    model = Ad
+    template_name = 'ads/user_ads.html'
     
+    def get_queryset(self):
+        self.queryset = (self.model.objects
+            .select_related('user')
+            .select_related('startup')
+            .filter(user=self.request.user).order_by('-created'))
+        return self.queryset
+
+class AdCreateView(LoginRequiredMixin, View):
+    model = Ad
+    form = AdForm
+    template_name = 'ads/ad_form.html'
+
+    def get(self, request, **kwargs):
+        user = request.user
+        self.form = self.form(user)
+        return render(request, self.template_name,
+            {'form': self.form})
+
+    def post(self, request, **kwargs):
+        user = request.user
+        bound_form = self.form(user, request.POST or None)
+        if bound_form.is_valid():
+            bound_form = bound_form.save(commit=False)
+            bound_form.user = user
+            bound_form.save()
+            return redirect(bound_form)
+        else:
+            return render(request, self.template_name,
+                {'form': bound_form})
+
+class AdUpdateView(LoginRequiredMixin, View):
+    model = Ad
+    form = AdForm
+    template_name = 'ads/ad_form.html'
+
+    def get(self, request, **kwargs):
+        user = request.user
+        ad_obj = (self.model.objects
+            .filter(user=user).get(slug=self.kwargs['slug']))
+        self.form = self.form(user, instance=ad_obj)
+        return render(request, self.template_name,
+            {'form': self.form})
+
+    def post(self, request, **kwargs):
+        user = request.user
+        ad_obj = (self.model.objects
+            .filter(user=user).get(slug=self.kwargs['slug']))
+        bound_form = self.form(
+                user, request.POST or None, instance = ad_obj)
+        if bound_form.is_valid():
+            bound_form = bound_form.save(commit=False)
+            bound_form.user = user
+            bound_form.save()
+            return redirect(bound_form)
+        else:
+            return render(request, self.template_name,
+                {'form': bound_form})
+
+class AdDeleteView(LoginRequiredMixin, DeleteView):
+    queryset = Ad.objects.all()
+    success_url = reverse_lazy('ads:user_ads')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next'] = self.request.GET.get('next')
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(
+            user=self.request.user
+        )
+
+
+class AdsIRespondedListView(LoginRequiredMixin, ListView):
+    model = Response
+    template_name = 'ads/ads_i_responded.html'
+    ordering = '-id'
+
+    def get_queryset(self):
+        self.queryset = (
+            self.model.objects
+            .filter(user=self.request.user)
+            .select_related('ad__user'))
+        return super().get_queryset()

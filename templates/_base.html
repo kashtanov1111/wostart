@@ -2,13 +2,17 @@
 {% load static %}
 {% url 'home' as home_url %}
 {% url 'about' as about_url %}
-{% url 'users:user_list' as user_list_url %}
-{% url 'startups:startup_list' as startup_list_url %}
 {% url 'account_change_password' as change_password_url %}
 {% url 'account_logout' as logout_url %}
+{% url 'users:user_list' as user_list_url %}
+{% url 'startups:startup_list' as startup_list_url %}
 {% url 'startups:user_startups' as user_startups_url %}
 {% url 'startups:startup_create' as startup_create_url %}
 {% url 'ads:ad_list' as ad_list_url %}
+{% url 'ads:user_ads' as user_ads_url %}
+{% url 'ads:ad_create' as ad_create_url %}
+{% url 'ads:ads_i_responded' as ads_i_responded_url %}
+{% url 'responses:response_list' as response_list_url %}
 
 <html>
     <head>

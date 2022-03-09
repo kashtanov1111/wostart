@@ -18,14 +18,10 @@
                     </p>
                     <p class="card-text">
                         {{ ad.position_verbose }} | 
-                        {{ ad.share|floatformat}}% | 
-                        <a href="{{ ad.user.get_absolute_url}}">
-                            {{ ad.user.first_name }} 
-                            {{ ad.user.last_name}}
-                        </a>
+                        {{ ad.share|floatformat}}%
                     </p>
                 </div>
-                {% if request.path == user_startups_url %}
+                {% if request.path == user_ads_url %}
                 <div class='col-md-auto my-md-0 my-2'>
                     <object  type="owo/uwu">
                         <a class='btn btn-outline-dark'
@@ -35,11 +31,19 @@
                     </object>
                     <object  type="owo/uwu">
                         <a class='btn btn-outline-danger' 
-                            href="{{ ad.get_delete_url }}?next=/startups/my/">
+                            href="{{ ad.get_delete_url }}?next={{request.path}}">
                             Delete
                         </a>
                     </object>
                 </div>
+                {% else %}
+                    {% if user.is_authenticated and ad.user != user %}
+                        {% if ad.id in ads_user_responded or request.path == ads_i_responded_url %}
+                            {% include 'ads/snippets/responded_button.html' %}
+                        {% else %}
+                            {% include 'ads/snippets/respond_button.html' %}
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

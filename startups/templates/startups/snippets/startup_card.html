@@ -18,7 +18,7 @@
                     <p class="card-text">
                         {{ startup.description|truncatewords:50 }}
                     </p>
-                    <p class="card-text">
+                    {% comment %} <p class="card-text">
                         {% if request.path != user_startups_url %}
                         Founder:
                         <object  type="owo/uwu">   
@@ -28,7 +28,7 @@
                             </a>
                         </object>
                     {% endif %}
-                    </p>
+                    </p> {% endcomment %}
                 </div>
                 {% if request.path == user_startups_url %}
                 <div class='col-md-auto my-md-0 my-2'>
@@ -40,7 +40,7 @@
                     </object>
                     <object  type="owo/uwu">
                         <a class='btn btn-outline-danger' 
-                            href="{{ startup.get_delete_url }}?next=/startups/my/">
+                            href="{{ startup.get_delete_url }}?next={{request.path}}">
                             Delete
                         </a>
                     </object>

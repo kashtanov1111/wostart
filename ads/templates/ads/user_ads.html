@@ -1,0 +1,27 @@
+{% extends 'ads/base_ads.html' %}
+
+{% block title %}
+{{ block.super }} - My Ads
+{% endblock title %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='text-center'>My ad{{ object_list|pluralize}}</h1>
+        <div class="row row-cols-1 g-2">
+            {% for ad in object_list %}
+                {% include 'ads/snippets/ad_card.html'%}
+            {% endfor %}
+        </div>
+        {% if not object_list %}
+        <div class='row'>
+            <div class='col-md-6 text-center mx-auto'>
+                <p>You haven't created any ads yet.</p>
+                <a class='btn btn-outline-dark'
+                    href="{{ ad_create_url}}">
+                    Create Ad
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}

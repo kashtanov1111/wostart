@@ -39,12 +39,6 @@
                     <p class="card-text">
                         <b>Share:</b> {{ ad.share|floatformat }}%
                     </p>
-                    <p class='card-text'><b>Advertiser: </b>
-                        <a href="{{ ad.user.get_absolute_url}}">
-                        {{ ad.user.first_name }} 
-                        {{ ad.user.last_name }}
-                        </a>
-                    </p>
                     {% if ad.startup %}
                         <p class='card-text'><b>Startup: </b>
                             <a href="{{ ad.startup.get_absolute_url }}">

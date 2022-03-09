@@ -25,7 +25,7 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle 
-                {% if request.path == ad_list_url or request.path == user_startups_url or request.path == startup_create_url %}
+                {% if request.path == ad_list_url or request.path == user_ads_url or request.path == ad_create_url or request.path == ads_i_responded_url %}
                 active
                 {% endif %}" 
                 href="#" id="navbarDropdownStartups" role="button" 
@@ -48,19 +48,29 @@
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <a class="dropdown-item
-                        {% if request.path == user_startups_url %}
+                        {% if request.path == ads_i_responded_url %}
                         active
                         {% endif %}" 
-                        href="{{ user_startups_url }}">
+                        href="{{ ads_i_responded_url }}">
+                        I responded
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item
+                        {% if request.path == user_ads_url %}
+                        active
+                        {% endif %}" 
+                        href="{{ user_ads_url }}">
                         My Ads
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item
-                        {% if request.path == startup_create_url %}
+                        {% if request.path == ad_create_url %}
                         active
                         {% endif %}" 
-                        href="{{ startup_create_url }}">
+                        href="{{ ad_create_url }}">
                         Create Ad
                     </a>
                 </li>
@@ -119,6 +129,15 @@
                 aria-current="page" 
                 href="{% url 'users:user_list' %}">
                 People
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link 
+            {% if request.path == response_list_url %}
+            active
+            {% endif %}"
+            aria-current="page" href="{{ response_list_url }}">
+                Responses
             </a>
         </li>
     </ul>

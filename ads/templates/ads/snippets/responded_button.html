@@ -1,0 +1,16 @@
+<div class='col-md-auto my-md-0 my-2'>
+    <form class='response_form' 
+        action="{% url 'response' %}" 
+        method='post'>
+        {% csrf_token %}
+        <input type="hidden" 
+                name='ad_slug' 
+                value='{{ad.slug}}'>
+        <div class='response-button'>
+        <button class='responded btn btn-outline-dark' 
+                type='submit'>
+            Responded
+        </button>
+        </div>
+    </form>
+</div>
