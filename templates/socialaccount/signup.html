@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-6 mx-auto'>
+            <h1 class='text-center'>{% trans "Sign Up" %}</h1>
+        
+        <p class='text-center my-0'>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+        {{site_name}}.</p>
+        <p class='text-center'>As a final step, please complete the following form:{% endblocktrans %}</p>
+        
+        <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class='my-2'>
+                    {{ field|as_crispy_field }}
+                </div>
+                {% if field.help_text %}
+                    <span class='helptext'>
+                        {{ field.help_text }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <div class='col-md-3 mx-auto'>
+                <button class=' col-12 mybtn btn btn-success' 
+                        type="submit">
+                        {% trans "Sign Up" %}
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

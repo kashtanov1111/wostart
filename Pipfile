@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 django = "~=4.0.2"
 psycopg2-binary = "*"
-django-allauth = "==0.43.0"
+django-allauth = "==0.49.0"
 django-crispy-forms = "*"
 environs = {version = "==9.5.0", extras = ["django"]}
 pillow = "==9.0.1"

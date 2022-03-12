@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.db.models import Value, Q 
 from django.db.models.functions import Concat
+from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
@@ -41,6 +42,13 @@ class CustomUser(AbstractUser):
 
 
     objects = CustomUserManager()
+
+def customuser_post_save_receiver(
+    sender, instance, created, *args, **kwargs):
+    if created == True:
+        UserProfile.objects.create(user=instance)
+
+post_save.connect(customuser_post_save_receiver, sender=CustomUser)
 
 class UserProfileQueryset(models.query.QuerySet):
     pass

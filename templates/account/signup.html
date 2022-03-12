@@ -1,5 +1,7 @@
 {%  extends '_base.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
+{% providers_media_js %}
 
 {% block title %}Sign Up{% endblock title %}
 
@@ -8,10 +10,10 @@
     <div class='row'>
         <div class='col-md-6 mx-auto'>
             <form class='form-margin' action="" method='post'>
-                <h1>Sign Up</h1>
+                <h1 class='text-center'>Sign Up</h1>
                 {% csrf_token %}
                 {% for field in form %}
-                        <div class='my-1'>
+                        <div class='my-2'>
                             {{ field|as_crispy_field }}
                         </div>
                         {% if field.help_text %}
@@ -20,7 +22,16 @@
                             </span>
                         {% endif %}
                 {% endfor %}
-                <button class='mybtn btn btn-primary' type='submit'>Sign Up</button>
+                <div class='col-md-3 mx-auto'>
+                    <button class='mybtn btn btn-primary col-12' type='submit'>Sign Up</button>
+                </div>
+                <p class='text-center my-0'>Or</p>
+                    <a href="{% provider_login_url "facebook" method="oauth2" %}" 
+                        class="col-12 text-center px-3 btn btn-block btn-social btn-facebook" 
+                        style="background-color:#3b5998;">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                                        Sign up with Facebook
+                </a>
             </form>
         </div>
     </div>
