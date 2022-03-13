@@ -25,7 +25,7 @@
                         </div>
                     {% endif %}
                     {% for field in form %}
-                            <div class='my-2'>
+                            <div class='mt-2'>
                                 {{ field|as_crispy_field }}
                             </div>
                             {% if field.help_text %}
@@ -34,6 +34,9 @@
                                 </span>
                             {% endif %}
                     {% endfor %}
+                    <div class='col-md-auto text-end my-0'>
+                        <a class="col-md-auto my-0 button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                    </div>
                     <div class='col-md-3 mx-auto'>
                         <button class='mybtn btn btn-primary col-12 '
                                 type='submit'>Log In</button>

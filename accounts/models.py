@@ -11,6 +11,9 @@ from django.urls import reverse
 
 class CustomUserQueryset(models.query.QuerySet):
 
+    def active(self):
+        return self.filter(active=True)
+    
     def with_full_name(self):
         return self.annotate(
             full_name=Concat('first_name', Value(' '), 'last_name'))
@@ -33,6 +36,9 @@ class CustomUserManager(UserManager):
 
     def search(self, query):
         return self.get_queryset().search(query)
+    
+    def all(self):
+        return self.get_queryset().ative()
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
