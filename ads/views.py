@@ -91,7 +91,7 @@ class AdDetailView(DetailView):
     queryset = (
         model.objects.select_related('user').select_related('startup'))
 
-class UserAdsListView(ListView):
+class UserAdsListView(LoginRequiredMixin, ListView):
     model = Ad
     template_name = 'ads/user_ads.html'
     
