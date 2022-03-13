@@ -264,7 +264,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = env('EMAIL_PORT', default='465')
+EMAIL_PORT = env('EMAIL_PORT', default=465)
 EMAIL_HOST_USER = '1kashtanov1111@gmail.com'
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = '1wostart@gmail.com'
