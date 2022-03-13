@@ -26,11 +26,15 @@
                     <button class='mybtn btn btn-primary col-12' type='submit'>Sign Up</button>
                 </div>
                 <p class='text-center my-0'>Or</p>
-                    <a href="{% provider_login_url "facebook" method="oauth2" %}" 
-                        class="col-12 text-center px-3 btn btn-block btn-social btn-facebook" 
-                        style="background-color:#3b5998;">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                                        Sign up with Facebook
+                <a href="{% provider_login_url "facebook" method="oauth2" %}" 
+                    class="col-12 text-center px-3 btn btn-block btn-social btn-facebook" 
+                    style="background-color:#3b5998;">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                    Sign up with Facebook
+                </a>
+                <a href="{% provider_login_url "google" method="oauth2" %}"
+                    type="button" class="col-12 login-with-google-btn mt-2" >
+                    Sign up with Google
                 </a>
             </form>
         </div>
