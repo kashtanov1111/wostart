@@ -261,9 +261,9 @@ ACCOUNT_UNIQUE_EMAIL = True
 # email settings
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '1wostart@gmail.com'
-EMAIL_HOST_PASSWORD = env('GMAIL_PASSWORD')
-EMAIL_USE_SSL = False
+EMAIL_HOST_USER = '1kashtanov1111@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = '1wostart@gmail.com'

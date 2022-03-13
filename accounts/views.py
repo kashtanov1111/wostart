@@ -121,7 +121,7 @@ class UserDetailView(View):
             'person_startups': person_startups,
             'has_avatar': has_avatar})
 
-class CustomPasswordChangeView(PasswordChangeView):
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
