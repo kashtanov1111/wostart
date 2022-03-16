@@ -262,7 +262,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
 # email settings
-if env('EMAIL_BACKEND'):
+if env('EMAIL_BACKEND', default=False):
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
