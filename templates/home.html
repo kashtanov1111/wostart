@@ -2,14 +2,81 @@
 {% load static %}
 
 {% block content %}
+<div class='container px-0'>
 <div style='background-color:black;' class='container-photo'>
-    <img style='opacity:0.6;'
-        width='100%' 
+    <img style='opacity:0.6; object-fit: cover;'
+        height='600px'
+        width='100%'
         src="{% static 'images/morning-newyork.jpg' %}" alt="">
     <div class='centered'>
         <h1>Startups. People. Together.</h1>
-        <p>Here like-minded people find each other.</p>        
+        <h6>Here like-minded people find each other.</h6>        
+        <a class='btn btn-outline-light btn-lg mt-2'
+            href="{% url 'account_signup' %}">Sign Up</a>
     </div>
-    <script src="{% static 'js/home.js' %}"></script>
 </div>
+</div>
+<div class='container my-3'>
+    <div class='row mx-0'>
+            <h1 class='text-center mb-4'>
+                Why should you use the wostart?
+            </h1>
+            <div class='col-md-10 mx-auto'>
+                <div class='row'>
+                    <h3 class='card col-md mb-4 me-4'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                            To find an employee or a co-founder for a share in your startup
+                        </div>
+                    </h3>
+                    <h3 class='card col-md mb-4'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                            To find a job for a share in someone else's startup
+                        </div>
+                    </h3>
+                </div>
+            </div>
+            <hr>
+            <h1 class='text-center mb-4'>How to use it?</h1>
+            <div class='col-md-10 mx-auto'>
+                <div class='row'>
+                    <h3 class='card col-md me-4 mb-md-4'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-1"></i></i></span>
+                            <a href="{% url 'account_signup' %}">Sign Up</a>  
+                            or 
+                            <a href="{% url 'account_login' %}">Log In</a>  
+                        </div>
+                    </h3>
+                    <h3 class='card col-md mb-md-4'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-2"></i></span>
+                            <a href="{{startup_create_url}}">Add your Startup</a> 
+                            , if there is any.
+                        </div>
+                    </h3>
+                </div>
+                <div class='row'>
+                    <h3 class='card col-md me-4'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-3"></i></span>
+                            <a href="{{ ad_create_url }}">Create an Ad</a>
+                             or
+                            <a href="{{ ad_list_url }}">Respond</a>
+                            to existing ones
+                        </div>
+                    </h3>
+                    <h3 class='card col-md'>
+                        <div class='card-body'>
+                            <span><i class="fa-solid fa-4"></i></span>
+                            Wait for <a href="{{response_list_url}}">responses</a>
+                             if you have created an Ad.       
+                        </div>
+                    </h3>
+                </div>
+            </div>
+    </div>
+</div>
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock content %}

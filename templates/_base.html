@@ -23,12 +23,20 @@
         {% block head %}
         {% endblock head %}
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         {% include 'base/navbar.html' %}
         {% include 'base/before_block_content.html' %}
             {% include 'base/messages.html' %}
             {% block content %}
             {% endblock content %}
         {% include 'base/before_closing_body.html' %}
+    <footer class="footer mt-auto bg-light py-3">
+        <div class="container">
+            <div class='row justify-content-between'>
+                <p class="col-auto text-muted my-0">Wostart &copy; 2022 Company, Inc</p>
+                <p class='col-auto my-0'>Email: 1wostart@gmail.com</p>
+            </div>
+        </div>
+        </footer>
     </body>
 </html>

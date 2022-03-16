@@ -114,3 +114,9 @@ margin-bottom: 12px;
 vertical-align: middle;
 padding-bottom: 4px;
 }
+
+.home-border {
+    border: 1px solid #f2f6fa;
+    border-radius: 30px;
+    background-color: #f2f6fa;
+}

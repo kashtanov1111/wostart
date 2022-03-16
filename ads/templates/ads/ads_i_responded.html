@@ -11,6 +11,17 @@
         <div class="row row-cols-1 g-2">
             {% for response in response_list %}
                 {% include 'ads/snippets/ad_card.html' with ad=response.ad %}
+            {% empty %}
+                <div class='row'>
+                    <div class='col-md-6 text-center mx-auto'>
+                        <p class='mb-1'>You haven't responded to any ads yet. 
+                            Click below.</p>
+                        <a class='mybtn btn btn-success'
+                            href="{% url 'ads:ad_list' %}">
+                            Ad List
+                        </a>
+                    </div>
+                </div>
             {% endfor %}
         </div>
         {% block footer %}

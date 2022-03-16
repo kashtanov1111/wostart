@@ -28,7 +28,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1', '.wostart.com']
+ALLOWED_HOSTS = [
+    '.herokuapp.com', 'localhost', '127.0.0.1', '.wostart.com',
+    'testserver']
 
 
 # Application definition
@@ -260,8 +262,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
 # email settings
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if env('EMAIL_BACKEND'):
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
