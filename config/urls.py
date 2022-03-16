@@ -39,6 +39,7 @@ urlpatterns = [
             name='update_profile'),
     path('about/', views.AboutPageView.as_view(), name='about'),
     path('', views.HomePageView.as_view(), name='home'),
+    path('tz_detect/', include('tz_detect.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

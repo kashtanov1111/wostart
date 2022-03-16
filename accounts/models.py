@@ -1,5 +1,7 @@
 from random import randint
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
@@ -8,6 +10,7 @@ from django.db.models.functions import Concat
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+
 
 class CustomUserQueryset(models.query.QuerySet):
 
@@ -74,7 +77,7 @@ class UserProfile(models.Model):
     about = models.TextField(max_length=1500, null=True, blank=True)
     instagram = models.CharField(max_length=100, blank=True, null=True)
     twitter = models.CharField(max_length=100, blank=True, null=True)
-    mobile_phone = models.BigIntegerField(blank=True, null=True)
+    mobile_phone = PhoneNumberField(blank=True, null=True)
     avatar = models.ImageField(
         upload_to='avatars', blank=True, null=True)
 

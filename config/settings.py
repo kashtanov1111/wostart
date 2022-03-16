@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'storages',
     'faker',
+    'phonenumber_field',
+    'tz_detect',
 
     # Local
     'accounts',
@@ -73,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'tz_detect.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

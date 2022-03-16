@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load tz_detect %}
 {% url 'home' as home_url %}
 {% url 'about' as about_url %}
 {% url 'account_change_password' as change_password_url %}
@@ -30,13 +31,14 @@
             {% block content %}
             {% endblock content %}
         {% include 'base/before_closing_body.html' %}
-    <footer class="footer mt-auto bg-light py-3">
-        <div class="container">
-            <div class='row justify-content-between'>
-                <p class="col-auto text-muted my-0">Wostart &copy; 2022 Company, Inc</p>
-                <p class='col-auto my-0'>Email: 1wostart@gmail.com</p>
+        <footer class="footer mt-auto bg-light py-3">
+            <div class="container">
+                <div class='row justify-content-between'>
+                    <p class="col-auto text-muted my-0 mx-md-1 mx-auto">Wostart &copy; 2022 Company, Inc</p>
+                    <p class='col-auto my-0 mx-md-1 mx-auto'>Email: 1wostart@gmail.com</p>
+                </div>
             </div>
-        </div>
         </footer>
+    {% tz_detect %}
     </body>
 </html>
