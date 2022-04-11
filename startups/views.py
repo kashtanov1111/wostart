@@ -16,7 +16,7 @@ from .forms import StartupForm, StartupCreateForm
 from config.utils import PageLinksMixin
 
 class StartupListView(PageLinksMixin, ListView):
-    paginate_by = 3
+    paginate_by = 10
     context_object_name = 'startup_list'
     queryset = Startup.objects.select_related('founder')
     ordering = '-founded'

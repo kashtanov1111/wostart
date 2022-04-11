@@ -12,9 +12,7 @@ from django.views.generic import (
 from .forms import CustomUserChangeForm, UserProfileForm
 from config.utils import PageLinksMixin
 
-# asdfasdfsdfadsf
 from startups.models import Startup
-# sdfsfsdfsdf
 
 class UpdateUserProfileView(LoginRequiredMixin, View):
     template_name = 'account/update_profile.html'
@@ -61,7 +59,7 @@ class UserListView(PageLinksMixin, ListView):
     queryset = (
         get_user_model().objects
         .select_related('profile'))
-    paginate_by = 3
+    paginate_by = 10
     ordering = '-date_joined'
 
     def get(self, request, *args, **kwargs):

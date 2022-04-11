@@ -1,21 +1,21 @@
-<form action="" method='get'>
+<form action="" method='get' class='response_list_get_form'>
     <div class='container'>
     <div class='row'>
-        <div class='col-md-3 col-6 form-floating px-1 my-1'>
+        <div class='col-md col-6 form-floating px-1 my-1'>
             <select class="form-select" 
                 aria-label="Default select example"
                 id='floatingSelect'
                 name='paginate_by'>
-                <option {% if pag_by == "1" %}selected
-                {% endif %}value="1">1</option>
-                <option {% if pag_by == "2" %}selected
-                {% endif %} value="2">2</option>
-                <option {% if pag_by == "3" %}selected
-                {% endif %}value="3">3</option>
+                <option {% if pag_by == "10" %}selected
+                {% endif %}value="10">10</option>
+                <option {% if pag_by == "20" %}selected
+                {% endif %} value="20">20</option>
+                <option {% if pag_by == "30" %}selected
+                {% endif %}value="30">30</option>
             </select>
             <label for="floatingSelect">Show by</label>
         </div>
-        <div class='col-md-3 col-6 form-floating px-1 my-1'>
+        <div class='col-md col-6 form-floating px-1 my-1'>
             <select class="form-select" 
                 aria-label="Sort by"
                 id='floatingSelectOrder'
@@ -28,7 +28,7 @@
             </select>
             <label for="floatingSelectOrder">Sort by</label>
         </div>
-        <div class='col-md-3 col-6 form-floating px-1 my-1'>
+        <div class='col-md col-6 form-floating px-1 my-1'>
             <select class="form-select" 
                 aria-label="Ads"
                 id='floatingSelectOrder'
@@ -43,20 +43,13 @@
             </select>
             <label for="floatingSelectOrder">Ads</label>
         </div>
-        <div class='col-md-3 col-6 my-1'>
-            <div class='row'>
-                <div class="col-md-12 form-check mb-0">
-                    <input class="form-check-input" 
-                        type="checkbox" value="yes" id="defaultCheck1"
-                        name='clear_all'>
-                    <label class="form-check-label" for="defaultCheck1">
-                      Clear all
-                    </label>
-                </div>
-                <button class='col-md-12 col-12 mybtn btn btn-success mt-0 py-1' 
-                        type='submit'>Submit
-                </button>
-            </div>
+        <div class='col-md-auto col-auto my-auto'>
+            <input class="form-check-input" 
+                type="checkbox" value="yes" id="defaultCheck1"
+                name='clear_all'>
+            <label class="form-check-label" for="defaultCheck1">
+                Clear all
+            </label>
         </div>
     </div>
     </div>

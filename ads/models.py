@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils.functional import cached_property
 
 from tags.models import Tag
 from startups.models import Startup
@@ -44,20 +45,21 @@ class Ad(models.Model):
         help_text='Please tell us more about it.',
         verbose_name='About')
     share = models.DecimalField(max_digits=4, decimal_places=2,
-        help_text='Please specify the share.')
+        help_text='Please specify the share.', db_index=True)
     startup = models.ForeignKey(
         Startup, on_delete=models.CASCADE, related_name='ads',
         blank=True, null=True,
         help_text='Please choose the startup.')
     user = models.ForeignKey(get_user_model(),
         on_delete=models.CASCADE, related_name='ads')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
 
     objects = AdManager()
 
     def __str__(self):
         return self.title
 
+    @cached_property
     def position_verbose(self):
         return dict(self.POSITIONS)[self.position]
 

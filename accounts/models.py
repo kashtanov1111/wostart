@@ -10,6 +10,8 @@ from django.db.models.functions import Concat
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserQueryset(models.query.QuerySet):
@@ -45,6 +47,8 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+    date_joined = models.DateTimeField(
+        _("date joined"), default=timezone.now, db_index=True)
 
     def get_absolute_url(self):
         return reverse('users:user_profile', kwargs={'username': self.username})

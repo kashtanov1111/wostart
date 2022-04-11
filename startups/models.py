@@ -41,7 +41,7 @@ class Startup(models.Model):
         validators=[OptionalSchemeURLValidator()])
     founded = models.DateField(null=True,
         help_text='Please enter the date when your startup was founded.',
-        verbose_name='Founding Date')
+        verbose_name='Founding Date', db_index=True)
     founder = models.ForeignKey(
         get_user_model(), 
         on_delete=models.CASCADE, related_name='startups')
@@ -79,4 +79,4 @@ class StartupImage(models.Model):
     startup = models.ForeignKey(
         Startup, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(
-        upload_to=image_dir_path, blank=True, null=True)
+        upload_to=image_dir_path, blank=True, null=True, db_index=True)

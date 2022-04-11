@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'tags',
     'ads',
     'responses',
+    'contacts',
 ]
 
 MIDDLEWARE = [
@@ -258,10 +259,11 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 # allauth settings
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# SOCIALACCOUNT_SIGNUP_ON_GET=True
 
 
 # email settings

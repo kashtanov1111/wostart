@@ -142,6 +142,15 @@
             </a>
         </li>
         {% endif %}
+        <li class="nav-item">
+            <a class="nav-link 
+            {% if request.path == contact_form_url %}
+            active
+            {% endif %}"
+            aria-current="page" href="{{ contact_form_url }}">
+                Contact
+            </a>
+        </li>
     </ul>
     {% if user.is_authenticated %}
         <div class='navbar-nav d-flex'>

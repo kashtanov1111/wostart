@@ -1,4 +1,4 @@
-<form action="" method='get'>
+<form action="" method='get' class='ad_list_get_form'>
     <div class='container'>
         <div class='row'>
             <div class='col-md-8 col-12 px-1 my-1'>
@@ -12,12 +12,12 @@
                     aria-label="Default select example"
                     id='floatingSelect'
                     name='paginate_by'>
-                    <option {% if pag_by == "1" %}selected
-                    {% endif %}value="1">1</option>
-                    <option {% if pag_by == "2" %}selected
-                    {% endif %} value="2">2</option>
-                    <option {% if pag_by == "3" %}selected
-                    {% endif %}value="3">3</option>
+                    <option {% if pag_by == "10" %}selected
+                    {% endif %}value="10">10</option>
+                    <option {% if pag_by == "20" %}selected
+                    {% endif %} value="20">20</option>
+                    <option {% if pag_by == "30" %}selected
+                    {% endif %}value="30">30</option>
                 </select>
                 <label for="floatingSelect">Show by</label>
             </div>
@@ -95,9 +95,6 @@
                   Clear all
                 </label>
             </div>
-            <button class='col-md-auto col-12 mybtn btn btn-success mb-2 mt-md-0 mt-1' 
-                    type='submit'>Submit
-            </button>
         </div>
     </div>
     </form>

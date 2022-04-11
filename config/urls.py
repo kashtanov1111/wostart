@@ -34,6 +34,7 @@ urlpatterns = [
     path('startups/', include('startups.urls')),
     path('ads/', include('ads.urls')),
     path('responses/', include('responses.urls')),
+    path('contact/', include('contacts.urls')),
     path('response/', response_button_view, name='response'),
     path('profile/edit/', UpdateUserProfileView.as_view(), 
             name='update_profile'),

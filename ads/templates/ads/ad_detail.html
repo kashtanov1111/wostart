@@ -1,5 +1,5 @@
 {% extends 'ads/base_ads.html' %}
-
+{% load static %}
 
 {% block title %}
 {{ block.super }} - Ad Profile
@@ -28,6 +28,16 @@
                         Delete
                     </a>
                 </div>
+                {% else %}
+                <div class='col-md-auto'>
+                    {% if user.is_authenticated and ad.user != user %}
+                        {% if ad.id in ads_user_responded or request.path == ads_i_responded_url %}
+                            {% include 'ads/snippets/responded_button.html' %}
+                        {% else %}
+                            {% include 'ads/snippets/respond_button.html' %}
+                        {% endif %}
+                    {% endif %}
+                </div>
                 {% endif %}
                 <div class='col-md-12'>
                     <p class="card-text">
@@ -51,4 +61,5 @@
             </div>
           </div>
     </div>
+    <script src="{% static 'js/ajax_respond_buttons.js' %}"></script>
 {% endblock content %}

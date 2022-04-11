@@ -30,7 +30,7 @@ class ResponseListView(LoginRequiredMixin, PageLinksMixin, ListView):
     model = Response
     template_name = 'responses/response_list.html'
     ordering = '-id'
-    paginate_by = 3
+    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         self.request_paginate_by = self.request.GET.get('paginate_by')

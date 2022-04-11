@@ -15,7 +15,7 @@ from .models import Ad
 from .forms import AdForm
 
 class AdListView(PageLinksMixin, ListView):
-    paginate_by = 3
+    paginate_by = 10
     context_object_name = 'ad_list'
     queryset = (
         Ad.objects.select_related('startup').select_related('user'))
@@ -48,7 +48,9 @@ class AdListView(PageLinksMixin, ListView):
         context['min'] = self.request_share_min
         context['max'] = self.request_share_max
         if self.request.user.is_authenticated:
-            context['ads_user_responded'] = self.request.user.responses.values_list('ad_id', flat=True)
+            context['ads_user_responded'] = (
+                self.request.user.responses
+                    .values_list('ad_id', flat=True))
         if context['pag_by'] is None:
             context['pag_by'] = str(self.paginate_by)
         return context
@@ -90,6 +92,14 @@ class AdDetailView(DetailView):
     model = Ad
     queryset = (
         model.objects.select_related('user').select_related('startup'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['ads_user_responded'] = (
+                self.request.user.responses
+                    .values_list('ad_id', flat=True))
+        return context
 
 class UserAdsListView(LoginRequiredMixin, ListView):
     model = Ad
